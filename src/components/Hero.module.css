@@ -1,0 +1,205 @@
+.hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  gap: 64px;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 100px 32px 64px;
+}
+
+.inner {
+  flex: 1;
+  min-width: 0;
+}
+
+.badge {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+  color: var(--green);
+  background: var(--green-pale);
+  border: 1px solid var(--green-border);
+  padding: 5px 14px;
+  border-radius: 20px;
+  margin-bottom: 24px;
+}
+
+.headline {
+  font-size: clamp(38px, 5vw, 62px);
+  line-height: 1.1;
+  color: var(--green-dark);
+  margin-bottom: 20px;
+}
+
+.headline em {
+  font-style: italic;
+  color: var(--green);
+}
+
+.sub {
+  font-size: 17px;
+  color: var(--green-mid);
+  font-weight: 300;
+  line-height: 1.75;
+  max-width: 480px;
+  margin-bottom: 36px;
+}
+
+.ctas {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-bottom: 32px;
+}
+
+.btnPrimary {
+  font-size: 14px;
+  font-weight: 500;
+  padding: 14px 28px;
+  border-radius: 10px;
+  background: var(--green);
+  color: #fff;
+  transition: background 0.2s, transform 0.15s;
+}
+
+.btnPrimary:hover {
+  background: var(--green-accent);
+  transform: translateY(-1px);
+}
+
+.btnSecondary {
+  font-size: 14px;
+  font-weight: 500;
+  padding: 14px 28px;
+  border-radius: 10px;
+  background: var(--green-pale);
+  color: var(--green-dark);
+  border: 1px solid var(--green-border);
+  transition: background 0.2s;
+}
+
+.btnSecondary:hover {
+  background: var(--green-bar);
+}
+
+.trust {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 12px;
+  color: var(--green-sage);
+  font-weight: 300;
+}
+
+.dot {
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: var(--green-border);
+}
+
+/* Visual side */
+.visual {
+  flex-shrink: 0;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.ring {
+  position: relative;
+  width: 200px;
+  height: 200px;
+}
+
+.ring svg {
+  display: block;
+}
+
+.ringInner {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.ringNum {
+  font-family: 'DM Serif Display', serif;
+  font-size: 52px;
+  color: var(--green-dark);
+  line-height: 1;
+}
+
+.ringLabel {
+  font-size: 12px;
+  color: var(--green-sage);
+  margin-top: 4px;
+}
+
+.floatCards {
+  display: flex;
+  gap: 12px;
+}
+
+.floatCard {
+  background: #fff;
+  border: 1px solid var(--green-border);
+  border-radius: 12px;
+  padding: 16px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  box-shadow: 0 2px 12px rgba(30, 60, 20, 0.06);
+}
+
+.floatNum {
+  font-family: 'DM Serif Display', serif;
+  font-size: 22px;
+  color: var(--green-dark);
+}
+
+.floatLabel {
+  font-size: 11px;
+  color: var(--green-sage);
+}
+
+.floatBadge {
+  font-size: 10px;
+  font-weight: 500;
+  color: var(--green-accent);
+  background: #e2f2db;
+  padding: 2px 8px;
+  border-radius: 20px;
+  width: fit-content;
+  margin-top: 4px;
+}
+
+@media (max-width: 900px) {
+  .hero {
+    flex-direction: column;
+    text-align: center;
+    padding-top: 120px;
+    gap: 40px;
+  }
+
+  .sub {
+    max-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .ctas {
+    justify-content: center;
+  }
+
+  .trust {
+    justify-content: center;
+  }
+}

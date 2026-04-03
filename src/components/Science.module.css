@@ -1,0 +1,158 @@
+.section {
+  padding: 96px 32px;
+  background: var(--green-dark);
+  color: #fff;
+}
+
+.inner {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 64px;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.label {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--green-sage);
+  display: block;
+  margin-bottom: 12px;
+}
+
+.title {
+  font-size: clamp(28px, 3.5vw, 40px);
+  color: #fff;
+  margin-bottom: 12px;
+}
+
+.title em {
+  font-style: italic;
+  color: var(--green);
+}
+
+.sub {
+  font-size: 15px;
+  color: rgba(255, 255, 255, 0.55);
+  font-weight: 300;
+  line-height: 1.75;
+}
+
+.statsRow {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2px;
+  margin-bottom: 72px;
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.stat {
+  padding: 32px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  border-right: 1px solid rgba(255,255,255,0.08);
+  background: rgba(255,255,255,0.03);
+}
+
+.stat:last-child {
+  border-right: none;
+}
+
+.statNum {
+  font-family: 'DM Serif Display', serif;
+  font-size: 36px;
+  color: var(--green);
+  line-height: 1;
+}
+
+.statLabel {
+  font-size: 13px;
+  color: #fff;
+  font-weight: 400;
+}
+
+.statSub {
+  font-size: 11px;
+  color: rgba(255,255,255,0.4);
+  font-weight: 300;
+}
+
+.markersSection {}
+
+.markersTitle {
+  font-family: 'DM Serif Display', serif;
+  font-size: 22px;
+  color: #fff;
+  margin-bottom: 28px;
+  font-weight: 400;
+}
+
+.markersGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.markerCard {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  padding: 20px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 10px;
+}
+
+.markerDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--green);
+  flex-shrink: 0;
+  margin-top: 5px;
+}
+
+.markerName {
+  font-size: 13px;
+  font-weight: 500;
+  color: #fff;
+  margin-bottom: 5px;
+}
+
+.markerDesc {
+  font-size: 12px;
+  color: rgba(255,255,255,0.45);
+  font-weight: 300;
+  line-height: 1.6;
+}
+
+@media (max-width: 900px) {
+  .statsRow {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .stat {
+    border-right: 1px solid rgba(255,255,255,0.08);
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+}
+
+@media (max-width: 560px) {
+  .statsRow {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .markersGrid {
+    grid-template-columns: 1fr;
+  }
+}

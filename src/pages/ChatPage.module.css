@@ -1,0 +1,153 @@
+.page {
+  display: flex;
+  height: 100vh;
+  padding-top: 64px; /* navbar height */
+  background: #fff;
+}
+
+.sidebar {
+  width: 300px;
+  flex-shrink: 0;
+  border-right: 1px solid var(--green-border);
+  background: var(--green-pale);
+  overflow-y: auto;
+}
+
+.sidebarInner {
+  padding: 28px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  height: 100%;
+}
+
+.back {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: var(--green-mid);
+  font-weight: 400;
+  transition: color 0.2s;
+}
+
+.back:hover {
+  color: var(--green-dark);
+}
+
+.sidebarHeader {}
+
+.brandRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.brandDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--green);
+}
+
+.brandName {
+  font-family: 'DM Serif Display', serif;
+  font-size: 18px;
+  color: var(--green-dark);
+}
+
+.sidebarDesc {
+  font-size: 13px;
+  color: var(--green-mid);
+  font-weight: 300;
+  line-height: 1.65;
+}
+
+.capabilities {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.capLabel {
+  font-size: 10px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--green-sage);
+  margin-bottom: 4px;
+}
+
+.cap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  color: var(--green-mid);
+  font-weight: 300;
+  background: #fff;
+  border: 1px solid var(--green-border);
+  border-radius: 8px;
+  padding: 10px 14px;
+}
+
+.disclaimer {
+  font-size: 11px;
+  color: var(--green-sage);
+  font-weight: 300;
+  line-height: 1.65;
+  margin-top: auto;
+  padding-top: 16px;
+  border-top: 1px solid var(--green-border);
+}
+
+/* Chat area */
+.chatArea {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+}
+
+.chatHeader {
+  padding: 16px 24px;
+  border-bottom: 1px solid var(--green-border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-shrink: 0;
+}
+
+.chatHeaderLeft {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.onlineDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--green);
+  box-shadow: 0 0 0 2px rgba(74, 158, 63, 0.2);
+}
+
+.chatHeaderTitle {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--green-dark);
+}
+
+.chatHeaderSub {
+  font-size: 12px;
+  color: var(--green-sage);
+  font-weight: 300;
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    display: none;
+  }
+}

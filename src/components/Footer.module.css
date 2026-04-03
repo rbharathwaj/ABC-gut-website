@@ -1,0 +1,143 @@
+.footer {
+  background: var(--green-pale);
+  border-top: 1px solid var(--green-border);
+  padding: 64px 32px 32px;
+}
+
+.inner {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.top {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 80px;
+  margin-bottom: 48px;
+  padding-bottom: 48px;
+  border-bottom: 1px solid var(--green-border);
+}
+
+.brand {}
+
+.brandRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.brandDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--green);
+}
+
+.brandName {
+  font-family: 'DM Serif Display', serif;
+  font-size: 17px;
+  color: var(--green-dark);
+}
+
+.brandDesc {
+  font-size: 13px;
+  color: var(--green-mid);
+  font-weight: 300;
+  line-height: 1.7;
+  margin-bottom: 12px;
+}
+
+.cert {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--green);
+  letter-spacing: 0.5px;
+}
+
+.links {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 40px;
+}
+
+.linkGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.linkTitle {
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--green-sage);
+  margin-bottom: 4px;
+}
+
+.link {
+  font-size: 13px;
+  color: var(--green-mid);
+  font-weight: 300;
+  transition: color 0.2s;
+}
+
+.link:hover {
+  color: var(--green-dark);
+}
+
+.bottom {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 32px;
+  flex-wrap: wrap;
+}
+
+.legal {
+  font-size: 11px;
+  color: var(--green-sage);
+  font-weight: 300;
+  line-height: 1.75;
+  max-width: 620px;
+}
+
+.legalLinks {
+  display: flex;
+  gap: 20px;
+  flex-shrink: 0;
+}
+
+.legalLink {
+  font-size: 11px;
+  color: var(--green-sage);
+  font-weight: 300;
+  transition: color 0.2s;
+  white-space: nowrap;
+}
+
+.legalLink:hover {
+  color: var(--green-dark);
+}
+
+@media (max-width: 900px) {
+  .top {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .links {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 560px) {
+  .links {
+    grid-template-columns: 1fr;
+  }
+
+  .bottom {
+    flex-direction: column;
+  }
+}

@@ -1,0 +1,111 @@
+.section {
+  background: var(--green-pale);
+  border-top: 1px solid var(--green-border);
+  border-bottom: 1px solid var(--green-border);
+  padding: 96px 32px;
+}
+
+.inner {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 64px;
+}
+
+.label {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--green-sage);
+  display: block;
+  margin-bottom: 12px;
+}
+
+.title {
+  font-size: clamp(28px, 3.5vw, 40px);
+  color: var(--green-dark);
+  margin-bottom: 12px;
+}
+
+.title em {
+  font-style: italic;
+  color: var(--green);
+}
+
+.sub {
+  font-size: 15px;
+  color: var(--green-mid);
+  font-weight: 300;
+}
+
+.steps {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 32px;
+  position: relative;
+}
+
+.step {
+  position: relative;
+}
+
+.stepTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.stepNum {
+  font-family: 'DM Serif Display', serif;
+  font-size: 13px;
+  color: var(--green-border);
+  letter-spacing: 1px;
+}
+
+.stepIcon {
+  font-size: 22px;
+  width: 46px;
+  height: 46px;
+  background: #fff;
+  border: 1px solid var(--green-border);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.stepTitle {
+  font-family: 'DM Serif Display', serif;
+  font-size: 19px;
+  color: var(--green-dark);
+  margin-bottom: 10px;
+}
+
+.stepBody {
+  font-size: 13px;
+  color: var(--green-mid);
+  font-weight: 300;
+  line-height: 1.7;
+}
+
+.connector {
+  display: none;
+}
+
+@media (max-width: 900px) {
+  .steps {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 560px) {
+  .steps {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+}
