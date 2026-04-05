@@ -89,7 +89,7 @@
   display: flex;
   align-items: center;
   gap: 12px;
-  font-size: 12px;
+  font-size: 14px;
   color: var(--green-sage);
   font-weight: 300;
 }

@@ -27,15 +27,15 @@ export default function ChatPage() {
           <div className={styles.capabilities}>
             <div className={styles.capLabel}>I can help with</div>
             {[
-              { icon: '📊', text: 'Interpreting your gut report' },
-              { icon: '🥦', text: 'Food & supplement guidance' },
-              { icon: '🔬', text: 'Understanding the science' },
-              { icon: '🎯', text: 'Personalized action steps' },
-              { icon: '📈', text: 'Tracking your progress' },
-            ].map(c => (
-              <div key={c.text} className={styles.cap}>
-                <span>{c.icon}</span>
-                <span>{c.text}</span>
+              'Interpreting your gut report',
+              'Food & supplement guidance',
+              'Understanding the science',
+              'Personalized action steps',
+              'Tracking your progress',
+            ].map(text => (
+              <div key={text} className={styles.cap}>
+                <span className={styles.capDot} />
+                <span>{text}</span>
               </div>
             ))}
           </div>

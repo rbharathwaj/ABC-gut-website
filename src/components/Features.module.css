@@ -51,7 +51,7 @@
 }
 
 .card {
-  padding: 28px 24px;
+  padding: 28px 28px;
   border: 1px solid var(--green-border);
   border-radius: 12px;
   background: #fff;
@@ -63,27 +63,15 @@
   transform: translateY(-2px);
 }
 
-.cardIcon {
-  font-size: 24px;
-  width: 50px;
-  height: 50px;
-  background: var(--green-pale);
-  border-radius: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 18px;
-}
-
 .cardTitle {
   font-family: 'DM Serif Display', serif;
-  font-size: 18px;
+  font-size: 20px;
   color: var(--green-dark);
-  margin-bottom: 10px;
+  margin-bottom: 12px;
 }
 
 .cardBody {
-  font-size: 13px;
+  font-size: 15px;
   color: var(--green-mid);
   font-weight: 300;
   line-height: 1.7;
@@ -122,7 +110,7 @@
   display: flex;
   align-items: center;
   gap: 10px;
-  font-size: 14px;
+  font-size: 16px;
   color: var(--green-mid);
   font-weight: 300;
 }

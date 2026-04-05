@@ -63,31 +63,19 @@
 .stepNum {
   font-family: 'DM Serif Display', serif;
   font-size: 13px;
-  color: var(--green-border);
+  color: var(--green-sage);
   letter-spacing: 1px;
-}
-
-.stepIcon {
-  font-size: 22px;
-  width: 46px;
-  height: 46px;
-  background: #fff;
-  border: 1px solid var(--green-border);
-  border-radius: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
 .stepTitle {
   font-family: 'DM Serif Display', serif;
-  font-size: 19px;
+  font-size: 20px;
   color: var(--green-dark);
   margin-bottom: 10px;
 }
 
 .stepBody {
-  font-size: 13px;
+  font-size: 15px;
   color: var(--green-mid);
   font-weight: 300;
   line-height: 1.7;

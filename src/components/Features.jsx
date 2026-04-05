@@ -2,32 +2,26 @@ import styles from './Features.module.css'
 
 const FEATURES = [
   {
-    icon: '🧬',
-    title: 'Shotgun Metagenomic Sequencing',
+    title: 'Complete DNA Sequencing',
     body: 'We read 100% of your gut DNA — not just 16S amplicons. That means bacteria, fungi, viruses, archaea, and metabolic genes. Far more complete than standard tests.',
   },
   {
-    icon: '📊',
     title: 'Gut Wellness Score',
     body: 'A single composite score (0–100) integrating diversity, probiotic abundance, commensal balance, pathobiont control, and SCFA production. Easy to track over time.',
   },
   {
-    icon: '⚗️',
     title: 'Functional Markers (SCFAs)',
     body: 'We measure what your microbes actually do — butyrate, propionate, acetate — plus serotonin and GABA pathways, β-glucuronidase, and bile acid ratios.',
   },
   {
-    icon: '🛡️',
     title: 'Disease Risk Panels',
     body: 'Six systems panels: metabolic, neurological, respiratory, immune, digestive, and hormonal. Plus longevity scores and immunotherapy response prediction.',
   },
   {
-    icon: '🎯',
     title: 'Personalized Action Plan',
     body: 'Not just data — a ranked list of interventions with specific foods, supplements, doses, and timelines. Built for your exact microbiome profile.',
   },
   {
-    icon: '🔄',
     title: 'Retest & Track Progress',
     body: 'Monitor your microbiome over time. Compare reports, see what\'s working, and adjust your plan. Most clients see measurable improvement in 8–12 weeks.',
   },
@@ -49,7 +43,6 @@ export default function Features() {
         <div className={styles.grid}>
           {FEATURES.map(f => (
             <div key={f.title} className={styles.card}>
-              <div className={styles.cardIcon}>{f.icon}</div>
               <h3 className={styles.cardTitle}>{f.title}</h3>
               <p className={styles.cardBody}>{f.body}</p>
             </div>

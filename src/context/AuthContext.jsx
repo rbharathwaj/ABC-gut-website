@@ -8,17 +8,21 @@ export function AuthProvider({ children }) {
     return stored ? JSON.parse(stored) : null
   })
 
-  function login(username, password) {
+  function login(email, password) {
     // TODO: replace with real API call when backend is ready
     // Example:
-    // const res = await fetch('/api/login', { method: 'POST', body: JSON.stringify({ username, password }) })
+    // const res = await fetch('/api/login', { method: 'POST', body: JSON.stringify({ email, password }) })
     // const data = await res.json()
     // if (!res.ok) throw new Error(data.message)
     // setUser(data.user)
 
-    // Stub: hardcoded credentials for now
-    if (username === 'demo' && password === 'abcgut2026') {
-      const userData = { username }
+    // Stub: hardcoded credentials — add more entries here as needed
+    const USERS = [
+      { email: 'rbharathwaj2003@gmail.com', password: 'abcguttest' },
+    ]
+    const match = USERS.find(u => u.email === email.toLowerCase() && u.password === password)
+    if (match) {
+      const userData = { email: match.email }
       setUser(userData)
       sessionStorage.setItem('abcgut_user', JSON.stringify(userData))
       return true

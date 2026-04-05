@@ -92,6 +92,14 @@
   padding: 10px 14px;
 }
 
+.capDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--green);
+  flex-shrink: 0;
+}
+
 .disclaimer {
   font-size: 11px;
   color: var(--green-sage);

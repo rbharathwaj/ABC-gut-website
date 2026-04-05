@@ -9,7 +9,7 @@ export default function LoginPage() {
   const location = useLocation()
   const from = location.state?.from?.pathname || '/chat'
 
-  const [username, setUsername] = useState('')
+  const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
@@ -18,12 +18,12 @@ export default function LoginPage() {
     e.preventDefault()
     setError('')
     setLoading(true)
-    const ok = login(username.trim(), password)
+    const ok = login(email.trim(), password)
     setLoading(false)
     if (ok) {
       navigate(from, { replace: true })
     } else {
-      setError('Invalid username or password.')
+      setError('Invalid email or password.')
     }
   }
 
@@ -40,15 +40,15 @@ export default function LoginPage() {
 
         <form className={styles.form} onSubmit={handleSubmit}>
           <div className={styles.field}>
-            <label className={styles.label} htmlFor="username">Username</label>
+            <label className={styles.label} htmlFor="email">Email</label>
             <input
-              id="username"
+              id="email"
               className={styles.input}
-              type="text"
-              value={username}
-              onChange={e => setUsername(e.target.value)}
-              placeholder="Your username"
-              autoComplete="username"
+              type="email"
+              value={email}
+              onChange={e => setEmail(e.target.value)}
+              placeholder="you@example.com"
+              autoComplete="email"
               required
             />
           </div>

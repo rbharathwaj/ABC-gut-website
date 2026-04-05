@@ -106,7 +106,7 @@
 }
 
 .planDesc {
-  font-size: 13px;
+  font-size: 15px;
   color: var(--green-mid);
   font-weight: 300;
   line-height: 1.6;
@@ -126,7 +126,7 @@
   display: flex;
   align-items: flex-start;
   gap: 10px;
-  font-size: 13px;
+  font-size: 15px;
   color: var(--green-mid);
   font-weight: 300;
   line-height: 1.5;
@@ -144,7 +144,7 @@
 
 .check {
   color: var(--green);
-  font-size: 13px;
+  font-size: 15px;
   flex-shrink: 0;
   margin-top: 1px;
 }

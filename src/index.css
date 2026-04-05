@@ -27,10 +27,11 @@ html {
 
 body {
   font-family: 'DM Sans', sans-serif;
+  font-size: 17px;
   background: var(--white);
   color: var(--green-dark);
   -webkit-font-smoothing: antialiased;
-  line-height: 1.6;
+  line-height: 1.65;
 }
 
 h1, h2, h3 {
