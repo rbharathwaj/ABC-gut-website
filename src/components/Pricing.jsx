@@ -90,7 +90,7 @@ export default function Pricing() {
         </div>
 
         <p className={styles.note}>
-          FSA/HSA eligible · Free shipping both ways · CLIA certified lab · Results in 3–5 weeks
+          FSA/HSA eligible · Free shipping both ways · Results in 2–3 weeks
         </p>
       </div>
     </section>

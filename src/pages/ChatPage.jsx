@@ -17,7 +17,7 @@ export default function ChatPage() {
           <div className={styles.sidebarHeader}>
             <div className={styles.brandRow}>
               <span className={styles.brandDot} />
-              <span className={styles.brandName}>ABC Gut AI</span>
+              <span className={styles.brandName}>Gutly</span>
             </div>
             <p className={styles.sidebarDesc}>
               Ask anything about your microbiome, test results, gut health science, or your personalized recommendations.
@@ -50,9 +50,9 @@ export default function ChatPage() {
         <div className={styles.chatHeader}>
           <div className={styles.chatHeaderLeft}>
             <div className={styles.onlineDot} />
-            <span className={styles.chatHeaderTitle}>Gut Health AI</span>
+            <span className={styles.chatHeaderTitle}>Gutly</span>
           </div>
-          <span className={styles.chatHeaderSub}>Powered by ABC Gut</span>
+          <span className={styles.chatHeaderSub}>ABC Gut's AI assistant</span>
         </div>
         <ChatBot />
       </div>

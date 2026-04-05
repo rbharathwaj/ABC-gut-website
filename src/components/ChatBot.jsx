@@ -24,7 +24,7 @@ function getStubResponse(message) {
   if (lower.includes('16s') || lower.includes('shotgun'))
     return 'Yes — significantly. 16S rRNA sequencing reads only a small marker gene (~500 base pairs) and can identify roughly 80% of bacteria, often only to genus level. Shotgun metagenomic sequencing reads all the DNA in your sample — bacterial, fungal, viral, and archaeal — and can identify species-level taxonomy plus functional genes (what your microbes are actually doing). It\'s the method used by academic research institutions including the NIH Human Microbiome Project.'
   if (lower.includes('how long') || lower.includes('results'))
-    return 'Lab processing takes 3–5 weeks from sample receipt. Most clients start noticing subjective improvements (energy, digestion, mood) within 4 weeks of implementing their action plan. Measurable microbiome changes — confirmed by retest — typically occur within 8–12 weeks of targeted dietary and supplement interventions. Significant shifts in butyrate levels and Bifidobacterium are usually visible at the 8-week retest.'
+    return 'Lab processing takes 2–3 weeks from sample receipt. Most clients start noticing subjective improvements (energy, digestion, mood) within 4 weeks of implementing their action plan. Measurable microbiome changes — confirmed by retest — typically occur within 8–12 weeks of targeted dietary and supplement interventions. Significant shifts in butyrate levels and Bifidobacterium are usually visible at the 8-week retest.'
   return 'That\'s a great question about gut health. Our AI assistant will be fully operational soon. In the meantime, our team at support@abcgut.com can answer detailed questions about your microbiome, test results, or recommendations. You can also explore our science section for evidence-based information on key gut health markers.'
 }
 
@@ -32,7 +32,7 @@ export default function ChatBot() {
   const [messages, setMessages] = useState([
     {
       role: 'assistant',
-      text: 'Hi! I\'m the ABC Gut AI. I can help you understand your microbiome, interpret your results, and explain what the science says. What would you like to know?',
+      text: 'Hi! I\'m Gutly, your ABC Gut AI assistant. I can help you understand your microbiome, interpret your results, and explain what the science says. What would you like to know?',
     },
   ])
   const [input, setInput] = useState('')
@@ -110,7 +110,7 @@ export default function ChatBot() {
         <input
           className={styles.input}
           type="text"
-          placeholder="Ask about your gut health..."
+          placeholder="Ask Gutly about your gut health..."
           value={input}
           onChange={e => setInput(e.target.value)}
           disabled={loading}

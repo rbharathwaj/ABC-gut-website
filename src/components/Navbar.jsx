@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
+import { useAuth } from '../context/AuthContext'
 import styles from './Navbar.module.css'
 
 const NAV_LINKS = [
@@ -13,6 +14,7 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
   const location = useLocation()
+  const { user, logout } = useAuth()
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20)
@@ -37,12 +39,22 @@ export default function Navbar() {
             </li>
           ))}
           <li>
-            <Link to="/chat" className={styles.link}>Ask AI</Link>
+            <Link to="/chat" className={styles.link}>Ask Gutly</Link>
           </li>
         </ul>
 
         <div className={styles.actions}>
-          <a href="/#pricing" className={styles.btnOutline}>Get Your Kit</a>
+          {user ? (
+            <>
+              <Link to="/chat" className={styles.btnOutline}>Ask Gutly</Link>
+              <button className={styles.btnGhost} onClick={logout}>Sign Out</button>
+            </>
+          ) : (
+            <>
+              <Link to="/login" className={styles.btnGhost}>Sign In</Link>
+              <a href="/#pricing" className={styles.btnOutline}>Get Your Kit</a>
+            </>
+          )}
           <button
             className={styles.hamburger}
             onClick={() => setMenuOpen(o => !o)}

@@ -67,8 +67,23 @@
 .actions {
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 8px;
   flex-shrink: 0;
+}
+
+.btnGhost {
+  font-size: 13px;
+  font-weight: 500;
+  padding: 9px 16px;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--green-mid);
+  transition: color 0.2s;
+  font-family: 'DM Sans', sans-serif;
+}
+
+.btnGhost:hover {
+  color: var(--green-dark);
 }
 
 .btnOutline {

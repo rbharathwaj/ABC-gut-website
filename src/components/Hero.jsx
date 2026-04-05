@@ -5,7 +5,6 @@ export default function Hero() {
   return (
     <section className={styles.hero}>
       <div className={styles.inner}>
-        <div className={styles.badge}>Shotgun Metagenomic Sequencing</div>
         <h1 className={styles.headline}>
           Know Your Gut.<br />
           <em>Transform</em> Your Health.
@@ -16,14 +15,14 @@ export default function Hero() {
         </p>
         <div className={styles.ctas}>
           <a href="#pricing" className={styles.btnPrimary}>Order Your Kit — from $299</a>
-          <Link to="/chat" className={styles.btnSecondary}>Ask Our AI</Link>
+          <Link to="/chat" className={styles.btnSecondary}>Ask Gutly</Link>
         </div>
         <div className={styles.trust}>
-          <span>CLIA Certified</span>
+          <span>Results in 2–3 weeks</span>
           <span className={styles.dot} />
-          <span>Results in 3–5 weeks</span>
+          <span>Free shipping both ways</span>
           <span className={styles.dot} />
-          <span>10,000+ tests processed</span>
+          <span>FSA / HSA eligible</span>
         </div>
       </div>
 

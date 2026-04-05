@@ -15,7 +15,6 @@ export default function Footer() {
               The most comprehensive microbiome test available.
               Know your gut. Transform your health.
             </p>
-            <p className={styles.cert}>CLIA Certified Laboratory</p>
           </div>
 
           <div className={styles.links}>
@@ -35,7 +34,7 @@ export default function Footer() {
             </div>
             <div className={styles.linkGroup}>
               <div className={styles.linkTitle}>Support</div>
-              <Link to="/chat" className={styles.link}>Ask Our AI</Link>
+              <Link to="/chat" className={styles.link}>Ask Gutly</Link>
               <a href="mailto:support@abcgut.com" className={styles.link}>support@abcgut.com</a>
               <a href="#" className={styles.link}>FAQ</a>
               <a href="#" className={styles.link}>Sample Collection Guide</a>
