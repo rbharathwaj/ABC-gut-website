@@ -14,7 +14,7 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
   const location = useLocation()
-  const { user, logout } = useAuth()
+  const { user } = useAuth()
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20)
@@ -27,27 +27,26 @@ export default function Navbar() {
   return (
     <header className={`${styles.header} ${scrolled ? styles.scrolled : ''}`}>
       <nav className={styles.nav}>
-        <Link to="/" className={styles.brand}>
+        <Link to={user ? '/dashboard' : '/'} className={styles.brand}>
           <span className={styles.brandDot} />
           <span className={styles.brandName}>ABC Gut</span>
         </Link>
 
-        <ul className={`${styles.links} ${menuOpen ? styles.open : ''}`}>
-          {NAV_LINKS.map(({ label, href }) => (
-            <li key={label}>
-              <a href={href} className={styles.link}>{label}</a>
-            </li>
-          ))}
-          <li>
-            <Link to="/chat" className={styles.link}>Ask Gutly</Link>
-          </li>
-        </ul>
+        {!user && (
+          <ul className={`${styles.links} ${menuOpen ? styles.open : ''}`}>
+            {NAV_LINKS.map(({ label, href }) => (
+              <li key={label}>
+                <a href={href} className={styles.link}>{label}</a>
+              </li>
+            ))}
+          </ul>
+        )}
 
         <div className={styles.actions}>
           {user ? (
             <>
-              <Link to="/chat" className={styles.btnOutline}>Ask Gutly</Link>
-              <button className={styles.btnGhost} onClick={logout}>Sign Out</button>
+              <Link to="/" className={styles.btnGhost}>Home</Link>
+              <Link to="/dashboard" className={styles.btnGhost}>Dashboard</Link>
             </>
           ) : (
             <>

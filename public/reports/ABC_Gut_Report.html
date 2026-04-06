@@ -1,0 +1,1304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ABC Gut — Comprehensive Microbiome & Systems Health Report</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet" />
+  <style>
+    /* ============================================================
+       ABC GUT REPORT — STYLE GUIDE
+       ============================================================
+       COLORS
+         Primary green:   #4a9e3f
+         Dark text:       #1a2e1a
+         Mid green:       #5a7a55
+         Sage (labels):   #7aaa72
+         Pale mint bg:    #f5faf2
+         Border green:    #d4e8c8
+         Light bar:       #e8f2e4
+         Accent good:     #2e6e25 / bg #e2f2db
+         Accent warn:     #7a5800 / bg #fef3da
+         Accent bad:      #7a2020 / bg #fde8e8
+
+       FONTS
+         Display:  'DM Serif Display', serif  — headings, scores
+         Body:     'DM Sans', sans-serif       — all other text
+         Weights:  300 (light), 400 (regular), 500 (medium)
+
+       SPACING
+         Page padding:    48px sides
+         Section gap:     40px top/bottom
+         Card padding:    18–22px
+         Card radius:     10px
+         Grid gap:        16px
+
+       TO EDIT CLIENT DATA: search for [CLIENT-ID], [SAMPLE-ID],
+         [COLLECTION-DATE], [REPORT-DATE] and replace inline.
+    ============================================================ */
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: #f0f4ee;
+      color: #1a2e1a;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── Page wrapper ── */
+    .report {
+      background: #ffffff;
+      max-width: 900px;
+      margin: 40px auto;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 4px 32px rgba(30, 60, 20, 0.08);
+    }
+
+    /* ── Header ── */
+    .report-header {
+      background: #f5faf2;
+      border-bottom: 1px solid #d4e8c8;
+      padding: 44px 52px 40px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 28px;
+    }
+
+    .brand-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #4a9e3f;
+    }
+
+    .brand-name {
+      font-family: 'DM Serif Display', serif;
+      font-size: 18px;
+      color: #1a2e1a;
+      letter-spacing: 0.5px;
+    }
+
+    .report-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: 40px;
+      font-weight: 400;
+      line-height: 1.15;
+      color: #1a2e1a;
+      margin-bottom: 8px;
+    }
+
+    .report-title em {
+      font-style: italic;
+      color: #4a9e3f;
+    }
+
+    .report-subtitle {
+      font-size: 13px;
+      color: #7aaa72;
+      margin-bottom: 32px;
+      font-weight: 300;
+      letter-spacing: 0.3px;
+    }
+
+    .meta-row {
+      display: flex;
+      gap: 36px;
+      flex-wrap: wrap;
+    }
+
+    .meta-item {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .meta-label {
+      font-size: 10px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: #7aaa72;
+      font-weight: 500;
+    }
+
+    .meta-value {
+      font-size: 13px;
+      color: #1a2e1a;
+      font-weight: 400;
+    }
+
+    /* ── Content wrapper ── */
+    .content {
+      padding: 0 52px;
+    }
+
+    /* ── Section ── */
+    .section {
+      padding: 44px 0;
+      border-bottom: 1px solid #e8f2e4;
+    }
+
+    .section:last-child {
+      border-bottom: none;
+    }
+
+    .section-label {
+      font-size: 10px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #7aaa72;
+      font-weight: 500;
+      margin-bottom: 10px;
+    }
+
+    .section-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: 26px;
+      font-weight: 400;
+      color: #1a2e1a;
+      margin-bottom: 28px;
+      line-height: 1.2;
+    }
+
+    /* ── Score hero ── */
+    .score-hero {
+      display: flex;
+      align-items: center;
+      gap: 48px;
+      margin-bottom: 32px;
+      flex-wrap: wrap;
+    }
+
+    .score-circle {
+      position: relative;
+      width: 130px;
+      height: 130px;
+      flex-shrink: 0;
+    }
+
+    .score-circle svg { display: block; }
+
+    .score-num {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .score-big {
+      font-family: 'DM Serif Display', serif;
+      font-size: 36px;
+      color: #1a2e1a;
+      line-height: 1;
+    }
+
+    .score-denom {
+      font-size: 12px;
+      color: #7aaa72;
+      margin-top: 2px;
+    }
+
+    .score-desc { flex: 1; min-width: 200px; }
+
+    .score-status {
+      font-size: 12px;
+      font-weight: 500;
+      color: #4a9e3f;
+      margin-bottom: 10px;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+    }
+
+    .score-note {
+      font-size: 14px;
+      color: #5a7a55;
+      line-height: 1.7;
+      font-weight: 300;
+    }
+
+    /* ── Metric cards ── */
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-bottom: 28px;
+    }
+
+    .metric-card {
+      background: #f5faf2;
+      border-radius: 10px;
+      padding: 20px 22px;
+      border: 1px solid #d4e8c8;
+    }
+
+    .metric-label {
+      font-size: 11px;
+      color: #7aaa72;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 10px;
+      font-weight: 500;
+    }
+
+    .metric-value {
+      font-family: 'DM Serif Display', serif;
+      font-size: 26px;
+      color: #1a2e1a;
+      margin-bottom: 8px;
+    }
+
+    .metric-ref {
+      font-size: 11px;
+      color: #9abf93;
+      margin-top: 6px;
+    }
+
+    /* ── Status badges ── */
+    .badge {
+      font-size: 10px;
+      font-weight: 500;
+      padding: 3px 10px;
+      border-radius: 20px;
+      display: inline-block;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+    }
+
+    .badge-good    { background: #e2f2db; color: #2e6e25; }
+    .badge-warn    { background: #fef3da; color: #7a5800; }
+    .badge-bad     { background: #fde8e8; color: #7a2020; }
+    .badge-lowmod  { background: #eef7e8; color: #3e6e30; }
+
+    /* ── Findings grid ── */
+    .findings-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .findings-card {
+      border-radius: 10px;
+      padding: 22px 24px;
+      border: 1px solid;
+    }
+
+    .findings-card.positive {
+      background: #f5faf2;
+      border-color: #c2debb;
+    }
+
+    .findings-card.improve {
+      background: #fffdf5;
+      border-color: #e8d8aa;
+    }
+
+    .findings-title {
+      font-size: 10px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      margin-bottom: 16px;
+    }
+
+    .findings-card.positive .findings-title { color: #3e7a35; }
+    .findings-card.improve  .findings-title { color: #7a6020; }
+
+    .finding-item {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 10px;
+      font-size: 13px;
+      line-height: 1.55;
+      color: #2e4a2e;
+      font-weight: 300;
+    }
+
+    .finding-item:last-child { margin-bottom: 0; }
+
+    .finding-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      margin-top: 7px;
+      flex-shrink: 0;
+    }
+
+    .positive .finding-dot { background: #4a9e3f; }
+    .improve  .finding-dot { background: #c08a20; }
+
+    /* ── Bar rows ── */
+    .bar-rows { display: flex; flex-direction: column; gap: 16px; }
+
+    .bar-row { display: flex; flex-direction: column; gap: 6px; }
+
+    .bar-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+    }
+
+    .bar-name { font-size: 13px; color: #1a2e1a; font-weight: 400; }
+
+    .bar-pct  { font-size: 12px; color: #5a7a55; }
+
+    .bar-pct.warn { color: #c08a20; }
+    .bar-pct.good { color: #2e6e25; font-weight: 500; }
+
+    .bar-ref  { font-size: 11px; color: #9abf93; }
+    .bar-ref.warn { color: #c08a20; }
+
+    .bar-track {
+      height: 5px;
+      background: #e8f2e4;
+      border-radius: 3px;
+      overflow: hidden;
+    }
+
+    .bar-fill {
+      height: 100%;
+      border-radius: 3px;
+    }
+
+    .subsection-label {
+      font-size: 10px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: #7aaa72;
+      font-weight: 500;
+      margin: 28px 0 14px;
+    }
+
+    /* ── SCFA cards ── */
+    .scfa-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+
+    .scfa-card {
+      border-radius: 10px;
+      padding: 22px 20px;
+      text-align: center;
+      border: 1px solid;
+    }
+
+    .scfa-card.critical { background: #fde8e8; border-color: #f5b8b8; }
+    .scfa-card.good     { background: #f5faf2; border-color: #c2debb; }
+
+    .scfa-name {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      font-weight: 500;
+      margin-bottom: 12px;
+    }
+
+    .scfa-card.critical .scfa-name { color: #7a2020; }
+    .scfa-card.good     .scfa-name { color: #3e7a35; }
+
+    .scfa-num {
+      font-family: 'DM Serif Display', serif;
+      font-size: 30px;
+      color: #1a2e1a;
+      line-height: 1;
+      margin-bottom: 2px;
+    }
+
+    .scfa-unit   { font-size: 11px; color: #7aaa72; margin-bottom: 10px; }
+    .scfa-target { font-size: 11px; color: #9abf93; }
+
+    .scfa-alert {
+      font-size: 11px;
+      color: #9a2020;
+      font-weight: 500;
+      margin-top: 8px;
+    }
+
+    .scfa-ok {
+      font-size: 11px;
+      color: #3e7a35;
+      font-weight: 500;
+      margin-top: 8px;
+    }
+
+    /* ── Alert box ── */
+    .alert-box {
+      padding: 16px 20px;
+      border-radius: 8px;
+    }
+
+    .alert-box.danger  { background: #fde8e8; border: 1px solid #f5b8b8; }
+    .alert-box.success { background: #f5faf2;  border: 1px solid #c2debb; }
+
+    .alert-title {
+      font-size: 12px;
+      font-weight: 500;
+      margin-bottom: 5px;
+    }
+
+    .alert-box.danger  .alert-title { color: #7a2020; }
+    .alert-box.success .alert-title { color: #2e6e25; }
+
+    .alert-body {
+      font-size: 12px;
+      line-height: 1.65;
+      font-weight: 300;
+    }
+
+    .alert-box.danger  .alert-body { color: #7a2020; }
+    .alert-box.success .alert-body { color: #2e6e25; }
+
+    /* ── Systems panels ── */
+    .panels-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+
+    .panel-card {
+      border-radius: 10px;
+      padding: 20px 22px;
+      border: 1px solid #d4e8c8;
+      background: #fff;
+    }
+
+    .panel-card.tinted { background: #f5faf2; }
+
+    .panel-icon {
+      width: 34px;
+      height: 34px;
+      border-radius: 8px;
+      background: #e8f5e4;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 14px;
+      font-size: 16px;
+    }
+
+    .panel-name {
+      font-size: 12px;
+      font-weight: 500;
+      color: #1a2e1a;
+      margin-bottom: 8px;
+    }
+
+    .panel-note {
+      font-size: 11px;
+      color: #7aaa72;
+      margin-top: 8px;
+      font-weight: 300;
+      line-height: 1.5;
+    }
+
+    .score-pair {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+
+    .score-pair-item {}
+
+    .score-pair-num {
+      font-family: 'DM Serif Display', serif;
+      font-size: 30px;
+      color: #1a2e1a;
+      line-height: 1;
+      margin: 4px 0;
+    }
+
+    .score-pair-label {
+      font-size: 10px;
+      color: #7aaa72;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .score-pair-status {
+      font-size: 10px;
+      color: #3e7a35;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+    }
+
+    /* ── Recommendations ── */
+    .reco-items { display: flex; flex-direction: column; gap: 20px; }
+
+    .reco-item {
+      display: flex;
+      gap: 20px;
+      align-items: flex-start;
+      padding: 22px 24px;
+      border-radius: 10px;
+      border: 1px solid #d4e8c8;
+      background: #f5faf2;
+    }
+
+    .reco-num {
+      font-family: 'DM Serif Display', serif;
+      font-size: 32px;
+      color: #b8dbb2;
+      line-height: 1;
+      min-width: 28px;
+    }
+
+    .reco-body { flex: 1; }
+
+    .reco-title {
+      font-size: 14px;
+      font-weight: 500;
+      color: #1a2e1a;
+      margin-bottom: 8px;
+    }
+
+    .reco-desc {
+      font-size: 13px;
+      color: #5a7a55;
+      line-height: 1.65;
+      font-weight: 300;
+    }
+
+    .reco-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 12px;
+    }
+
+    .reco-tag {
+      font-size: 11px;
+      background: #ddf0d6;
+      color: #2e6e25;
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-weight: 400;
+    }
+
+    /* ── Lifestyle block ── */
+    .lifestyle-block {
+      margin-top: 24px;
+      padding: 22px 24px;
+      background: #f5faf2;
+      border-radius: 10px;
+      border: 1px solid #d4e8c8;
+    }
+
+    .lifestyle-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      margin-top: 16px;
+    }
+
+    .lifestyle-item-title {
+      font-size: 12px;
+      font-weight: 500;
+      color: #1a2e1a;
+      margin-bottom: 5px;
+    }
+
+    .lifestyle-item-body {
+      font-size: 12px;
+      color: #5a7a55;
+      font-weight: 300;
+      line-height: 1.6;
+    }
+
+    /* ── Timeline ── */
+    .timeline {
+      display: flex;
+      position: relative;
+      padding-top: 8px;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      top: 22px;
+      left: 6%;
+      right: 6%;
+      height: 1px;
+      background: #d4e8c8;
+    }
+
+    .tl-step {
+      flex: 1;
+      text-align: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .tl-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      margin: 0 auto 14px;
+    }
+
+    .tl-title {
+      font-size: 12px;
+      font-weight: 500;
+      color: #1a2e1a;
+      margin-bottom: 5px;
+    }
+
+    .tl-body {
+      font-size: 11px;
+      color: #7aaa72;
+      font-weight: 300;
+      line-height: 1.5;
+      padding: 0 8px;
+    }
+
+    /* ── Footer / disclaimer ── */
+    .report-footer {
+      background: #f5faf2;
+      border-top: 1px solid #d4e8c8;
+      padding: 24px 52px;
+      font-size: 11px;
+      color: #7aaa72;
+      line-height: 1.75;
+      font-weight: 300;
+    }
+
+    /* ── Print styles ── */
+    @media print {
+      body { background: #fff; }
+      .report { box-shadow: none; margin: 0; border-radius: 0; max-width: 100%; }
+    }
+
+    @media (max-width: 640px) {
+      .report-header, .content, .report-footer { padding-left: 24px; padding-right: 24px; }
+      .metrics-grid, .scfa-grid, .findings-grid, .panels-grid, .lifestyle-grid { grid-template-columns: 1fr; }
+      .report-title { font-size: 28px; }
+      .score-hero { gap: 24px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="report">
+
+  <!-- ═══════════════════════════════════════════
+       HEADER — Edit client info here
+  ═══════════════════════════════════════════ -->
+  <div class="report-header">
+    <div class="brand">
+      <div class="brand-dot"></div>
+      <div class="brand-name">ABC Gut</div>
+    </div>
+    <div class="report-title">Comprehensive Microbiome<br><em>&amp; Systems Health</em> Report</div>
+    <div class="report-subtitle">Shotgun Metagenomic Sequencing &nbsp;·&nbsp; Sample Type: Stool &nbsp;·&nbsp; Report Version 2.0</div>
+    <div class="meta-row">
+      <div class="meta-item">
+        <span class="meta-label">Client ID</span>
+        <span class="meta-value">[CLIENT-ID]</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Sample ID</span>
+        <span class="meta-value">[SAMPLE-ID]</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Collection Date</span>
+        <span class="meta-value">[COLLECTION-DATE]</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Report Date</span>
+        <span class="meta-value">[REPORT-DATE]</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="content">
+
+    <!-- ═══════════════════════════════════════════
+         SECTION 01 — Overall Health
+    ═══════════════════════════════════════════ -->
+    <div class="section">
+      <div class="section-label">01 · Overall Health</div>
+      <div class="section-title">Gut Wellness Score</div>
+
+      <div class="score-hero">
+        <div class="score-circle">
+          <!-- SVG ring: stroke-dasharray = 2πr = 2×π×52 ≈ 327
+               stroke-dashoffset = 327 × (1 - score/100)
+               For 78/100: offset = 327 × 0.22 ≈ 72 -->
+          <svg width="130" height="130" viewBox="0 0 130 130">
+            <circle cx="65" cy="65" r="52" fill="none" stroke="#e8f2e4" stroke-width="8"/>
+            <circle cx="65" cy="65" r="52" fill="none" stroke="#4a9e3f" stroke-width="8"
+              stroke-dasharray="327" stroke-dashoffset="72" stroke-linecap="round"
+              transform="rotate(-90 65 65)"/>
+          </svg>
+          <div class="score-num">
+            <span class="score-big">78</span>
+            <span class="score-denom">/ 100</span>
+          </div>
+        </div>
+        <div class="score-desc">
+          <div class="score-status">Good — Room for Optimization</div>
+          <div class="score-note">
+            Your gut microbiome shows strong diversity and resilient ecosystem markers.
+            Three targeted interventions can bring you to an optimal profile within 8–12 weeks.
+            This composite score integrates probiotic abundance, commensal balance, pathobiont
+            control, and functional capacity equally.
+          </div>
+        </div>
+      </div>
+
+      <!-- Metric cards -->
+      <div class="metrics-grid">
+        <div class="metric-card">
+          <div class="metric-label">Shannon Diversity</div>
+          <div class="metric-value">6.12</div>
+          <span class="badge badge-good">Optimal</span>
+          <div class="metric-ref">Reference: 5.62–6.42</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-label">Bacterial Richness</div>
+          <div class="metric-value">243 <span style="font-size:14px;color:#7aaa72;">spp</span></div>
+          <span class="badge badge-good">Normal</span>
+          <div class="metric-ref">Reference: 202–320 species</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-label">F/B Ratio</div>
+          <div class="metric-value">1.3</div>
+          <span class="badge badge-good">Optimal</span>
+          <div class="metric-ref">Reference: 0.9–2.0</div>
+        </div>
+      </div>
+
+      <!-- Strengths vs. Improvements -->
+      <div class="findings-grid">
+        <div class="findings-card positive">
+          <div class="findings-title">Strengths</div>
+          <div class="finding-item">
+            <div class="finding-dot"></div>
+            <span>High Shannon index (6.12) — robust, resilient ecosystem</span>
+          </div>
+          <div class="finding-item">
+            <div class="finding-dot"></div>
+            <span>Abundant butyrate-producing bacteria supporting gut barrier integrity</span>
+          </div>
+          <div class="finding-item">
+            <div class="finding-dot"></div>
+            <span>Akkermansia muciniphila at excellent levels (25.5%)</span>
+          </div>
+          <div class="finding-item">
+            <div class="finding-dot"></div>
+            <span>Faecalibacterium prausnitzii within healthy range (11.8%)</span>
+          </div>
+          <div class="finding-item">
+            <div class="finding-dot"></div>
+            <span>Balanced Firmicutes/Bacteroidetes ratio — optimal metabolic marker</span>
+          </div>
+        </div>
+        <div class="findings-card improve">
+          <div class="findings-title">Areas to Address</div>
+          <div class="finding-item">
+            <div class="finding-dot"></div>
+            <span>Elevated Proteobacteria 6.1% (target &lt;5%) — mild inflammation signal</span>
+          </div>
+          <div class="finding-item">
+            <div class="finding-dot"></div>
+            <span>Low Bifidobacterium 6.1% (target &gt;10%) — immune support gap</span>
+          </div>
+          <div class="finding-item">
+            <div class="finding-dot"></div>
+            <span>Critically low butyrate 1.1 μmol/g (target 5.1–12.4) — colonocyte fuel deficiency</span>
+          </div>
+          <div class="finding-item">
+            <div class="finding-dot"></div>
+            <span>Moderate β-glucuronidase activity — may affect estrogen recirculation</span>
+          </div>
+          <div class="finding-item">
+            <div class="finding-dot"></div>
+            <span>Desulfovibrio at 21.4% (target &lt;20%) — elevated H₂S producer</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════
+         SECTION 02 — Microbiome Composition
+    ═══════════════════════════════════════════ -->
+    <div class="section">
+      <div class="section-label">02 · Microbiome Composition</div>
+      <div class="section-title">Phylum &amp; Genera Profile</div>
+
+      <!-- Phylum bars -->
+      <div class="bar-rows">
+
+        <div class="bar-row">
+          <div class="bar-top">
+            <span class="bar-name">Firmicutes</span>
+            <span class="bar-pct">48.5% &nbsp;<span class="bar-ref">— Ref 40–60%</span></span>
+          </div>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:48.5%;background:#4a9e3f;"></div>
+          </div>
+        </div>
+
+        <div class="bar-row">
+          <div class="bar-top">
+            <span class="bar-name">Bacteroidetes</span>
+            <span class="bar-pct">36.7% &nbsp;<span class="bar-ref">— Ref 20–40%</span></span>
+          </div>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:36.7%;background:#62b558;"></div>
+          </div>
+        </div>
+
+        <div class="bar-row">
+          <div class="bar-top">
+            <span class="bar-name">Actinobacteria</span>
+            <span class="bar-pct">4.8% &nbsp;<span class="bar-ref">— Ref 3–10%</span></span>
+          </div>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:4.8%;background:#7eca73;"></div>
+          </div>
+        </div>
+
+        <div class="bar-row">
+          <div class="bar-top">
+            <span class="bar-name">Proteobacteria</span>
+            <span class="bar-pct warn">6.1% &nbsp;<span class="bar-ref warn">— Target &lt;5% ⚠</span></span>
+          </div>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:6.1%;background:#d4a020;"></div>
+          </div>
+        </div>
+
+        <div class="bar-row">
+          <div class="bar-top">
+            <span class="bar-name">Verrucomicrobia</span>
+            <span class="bar-pct">2.3% &nbsp;<span class="bar-ref">— Ref 1–5%</span></span>
+          </div>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:2.3%;background:#9ed897;"></div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Probiotic genera -->
+      <div class="subsection-label">Key Probiotic Genera</div>
+      <div class="bar-rows">
+
+        <div class="bar-row">
+          <div class="bar-top">
+            <span class="bar-name">Akkermansia muciniphila</span>
+            <span class="bar-pct good">25.5% &nbsp;<span class="bar-ref">— Excellent (Ref 0.02–3.0%)</span></span>
+          </div>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:100%;background:#4a9e3f;"></div>
+          </div>
+        </div>
+
+        <div class="bar-row">
+          <div class="bar-top">
+            <span class="bar-name">Roseburia</span>
+            <span class="bar-pct good">23.0% &nbsp;<span class="bar-ref">— Excellent (Ref &gt;10%)</span></span>
+          </div>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:80%;background:#62b558;"></div>
+          </div>
+        </div>
+
+        <div class="bar-row">
+          <div class="bar-top">
+            <span class="bar-name">Faecalibacterium prausnitzii</span>
+            <span class="bar-pct">11.8% &nbsp;<span class="bar-ref">— Normal (Ref 10–15%)</span></span>
+          </div>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:42%;background:#7eca73;"></div>
+          </div>
+        </div>
+
+        <div class="bar-row">
+          <div class="bar-top">
+            <span class="bar-name">Lactobacillus</span>
+            <span class="bar-pct">11.5% &nbsp;<span class="bar-ref">— Normal (Ref &gt;10%)</span></span>
+          </div>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:40%;background:#7eca73;"></div>
+          </div>
+        </div>
+
+        <div class="bar-row">
+          <div class="bar-top">
+            <span class="bar-name">Bifidobacterium</span>
+            <span class="bar-pct warn">6.1% &nbsp;<span class="bar-ref warn">— Below target (Ref &gt;10%) ⚠</span></span>
+          </div>
+          <div class="bar-track">
+            <div class="bar-fill" style="width:22%;background:#d4a020;"></div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Pathobiont note -->
+      <div style="margin-top:28px;">
+        <div class="subsection-label" style="margin-top:0;">Pathogen Screen</div>
+        <div class="alert-box success">
+          <div class="alert-title">All major pathogens — not detected</div>
+          <div class="alert-body">
+            Clostridium difficile · Salmonella spp. · Campylobacter spp. — all clear.
+            Comprehensive multiplex PCR and metagenomic screening completed for bacterial,
+            parasitic, fungal, and viral targets.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════
+         SECTION 03 — Functional Analysis (SCFAs)
+    ═══════════════════════════════════════════ -->
+    <div class="section">
+      <div class="section-label">03 · Functional Analysis</div>
+      <div class="section-title">Short-Chain Fatty Acids (SCFAs)</div>
+
+      <div class="scfa-grid">
+        <div class="scfa-card critical">
+          <div class="scfa-name">Butyrate</div>
+          <div class="scfa-num">1.1</div>
+          <div class="scfa-unit">μmol/g</div>
+          <div class="scfa-target">Target &gt;5.1 μmol/g</div>
+          <div class="scfa-alert">Critical — far below target</div>
+        </div>
+        <div class="scfa-card good">
+          <div class="scfa-name">Propionate</div>
+          <div class="scfa-num">24.4</div>
+          <div class="scfa-unit">%</div>
+          <div class="scfa-target">Target &gt;12%</div>
+          <div class="scfa-ok">Above target</div>
+        </div>
+        <div class="scfa-card good">
+          <div class="scfa-name">Acetate</div>
+          <div class="scfa-num">71.7</div>
+          <div class="scfa-unit">%</div>
+          <div class="scfa-target">Target &gt;25%</div>
+          <div class="scfa-ok">Above target</div>
+        </div>
+      </div>
+
+      <div class="alert-box danger">
+        <div class="alert-title">Critical Finding: Butyrate</div>
+        <div class="alert-body">
+          Butyrate at 1.1 μmol/g is significantly below the 5.1 μmol/g threshold. Low butyrate
+          is linked with increased intestinal permeability, inflammatory bowel disease risk,
+          colorectal cancer susceptibility, and impaired insulin sensitivity.
+          Raising this level is the #1 priority action.
+        </div>
+      </div>
+
+      <!-- Additional functional markers -->
+      <div class="subsection-label">Additional Functional Markers</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+        <div class="metric-card">
+          <div class="metric-label">Serotonin Pathway</div>
+          <div class="metric-value" style="font-size:20px;">96.11 <span style="font-size:12px;color:#7aaa72;">μg/g</span></div>
+          <span class="badge badge-good">Normal</span>
+          <div class="metric-ref">~90% of body's serotonin produced in gut</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-label">GABA Pathway</div>
+          <div class="metric-value" style="font-size:20px;">213.01 <span style="font-size:12px;color:#7aaa72;">μg/g</span></div>
+          <span class="badge badge-good">Normal</span>
+          <div class="metric-ref">Adequate for mood regulation</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-label">β-Glucuronidase Activity</div>
+          <div class="metric-value" style="font-size:20px;">281 <span style="font-size:12px;color:#7aaa72;">U/mL</span></div>
+          <span class="badge badge-good">Normal</span>
+          <div class="metric-ref">Target &lt;2300 — estrogen recirculation controlled</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-label">DCA/LCA Bile Acid Ratio</div>
+          <div class="metric-value" style="font-size:20px;">0.79</div>
+          <span class="badge badge-good">Balanced</span>
+          <div class="metric-ref">Supports fat digestion &amp; cholesterol metabolism</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════
+         SECTION 04 — Systems Panels
+    ═══════════════════════════════════════════ -->
+    <div class="section">
+      <div class="section-label">04 · Systems Panels</div>
+      <div class="section-title">Disease Risk Associations</div>
+      <div style="font-size:12px;color:#7aaa72;margin-bottom:24px;font-weight:300;">
+        These panels represent microbiome-based risk associations, not diagnoses.
+        Discuss all findings with a qualified clinician before making any health decisions.
+      </div>
+
+      <div class="panels-grid">
+        <div class="panel-card">
+          <div class="panel-icon">🫀</div>
+          <div class="panel-name">Metabolic Health</div>
+          <span class="badge badge-good">Low Risk</span>
+          <div class="panel-note">High Akkermansia (25.5%) strongly protective against metabolic dysfunction</div>
+        </div>
+        <div class="panel-card">
+          <div class="panel-icon">🧠</div>
+          <div class="panel-name">Neurological &amp; Mood</div>
+          <span class="badge badge-good">Low Risk</span>
+          <div class="panel-note">Normal serotonin (96.11 μg/g) and GABA (213.01 μg/g). High diversity supports neuroimmune resilience</div>
+        </div>
+        <div class="panel-card">
+          <div class="panel-icon">🌬️</div>
+          <div class="panel-name">Respiratory Health</div>
+          <span class="badge badge-lowmod">Low–Moderate</span>
+          <div class="panel-note">Low butyrate may reduce Treg immune function; overall diversity supportive</div>
+        </div>
+        <div class="panel-card">
+          <div class="panel-icon">🦠</div>
+          <div class="panel-name">Immune &amp; Autoimmune</div>
+          <span class="badge badge-good">Low Risk</span>
+          <div class="panel-note">Good diversity + balanced SCFAs. Elevated Proteobacteria (6.1%) warrants monitoring</div>
+        </div>
+        <div class="panel-card">
+          <div class="panel-icon">🔬</div>
+          <div class="panel-name">Digestive Health</div>
+          <span class="badge badge-lowmod">Low–Moderate</span>
+          <div class="panel-note">Intestinal permeability moderate — driven by low butyrate and elevated Proteobacteria</div>
+        </div>
+        <div class="panel-card">
+          <div class="panel-icon">⚖️</div>
+          <div class="panel-name">Hormonal Balance</div>
+          <span class="badge badge-good">Low Risk</span>
+          <div class="panel-note">β-glucuronidase 281 U/mL — estrogen metabolism controlled. Low PCOS/T2D risk</div>
+        </div>
+      </div>
+
+      <!-- Longevity + Immunotherapy row -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+        <div class="panel-card tinted">
+          <div class="panel-name" style="margin-bottom:14px;">Aging &amp; Longevity</div>
+          <div class="score-pair">
+            <div class="score-pair-item">
+              <div class="score-pair-label">Longevity Score</div>
+              <div class="score-pair-num">8.2 <span style="font-size:13px;color:#7aaa72;">/ 10</span></div>
+              <div class="score-pair-status">Favorable</div>
+            </div>
+            <div class="score-pair-item" style="text-align:right;">
+              <div class="score-pair-label">Frailty Resilience</div>
+              <div class="score-pair-num">7.8 <span style="font-size:13px;color:#7aaa72;">/ 10</span></div>
+              <div class="score-pair-status">Low Risk</div>
+            </div>
+          </div>
+          <div class="panel-note" style="margin-top:12px;">
+            Geroprotective genera present: Faecalibacterium · Blautia (16.6%) · Roseburia (23.0%) · Akkermansia (25.5%)
+          </div>
+        </div>
+        <div class="panel-card tinted">
+          <div class="panel-name" style="margin-bottom:14px;">Immunotherapy Response</div>
+          <div class="score-pair">
+            <div class="score-pair-item">
+              <div class="score-pair-label">Response Likelihood</div>
+              <div class="score-pair-num">72<span style="font-size:16px;">%</span></div>
+              <div class="score-pair-status">High</div>
+            </div>
+            <div class="score-pair-item" style="text-align:right;">
+              <div class="score-pair-label">irAE Risk</div>
+              <div class="score-pair-num">35<span style="font-size:16px;">%</span></div>
+              <div class="score-pair-status" style="color:#c08a20;">Low–Mod</div>
+            </div>
+          </div>
+          <div class="panel-note" style="margin-top:12px;">
+            High diversity (6.12) + excellent Akkermansia = strong anti-PD1 efficacy predictor.
+            For checkpoint inhibitor context only.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════
+         SECTION 05 — Personalized Recommendations
+    ═══════════════════════════════════════════ -->
+    <div class="section">
+      <div class="section-label">05 · Action Plan</div>
+      <div class="section-title">Personalized Recommendations</div>
+
+      <div class="reco-items">
+
+        <div class="reco-item">
+          <div class="reco-num">1</div>
+          <div class="reco-body">
+            <div class="reco-title">Increase Butyrate Production — Critical Priority</div>
+            <div class="reco-desc">
+              Goal: Raise butyrate from 1.1 to 5.1+ μmol/g within 8–12 weeks.
+              Prioritize resistant starch as the primary dietary lever. Add tributyrin supplement
+              and increase intact whole grains and cruciferous vegetables daily.
+              Inulin-rich foods (chicory root, Jerusalem artichoke, garlic, asparagus) support
+              Faecalibacterium, your key butyrate producer.
+            </div>
+            <div class="reco-tags">
+              <span class="reco-tag">Resistant starch 15–30g/day</span>
+              <span class="reco-tag">Tributyrin 300mg/day</span>
+              <span class="reco-tag">Farro · barley · quinoa</span>
+              <span class="reco-tag">Broccoli · Brussels sprouts · cabbage</span>
+              <span class="reco-tag">Chicory root · garlic · asparagus</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="reco-item">
+          <div class="reco-num">2</div>
+          <div class="reco-body">
+            <div class="reco-title">Restore Bifidobacterium Levels</div>
+            <div class="reco-desc">
+              Goal: Increase from 6.1% to &gt;10% for optimal immune function.
+              A multi-strain Bifidobacterium probiotic combined with GOS prebiotic provides
+              targeted support. Fermented dairy (if tolerated) introduces additional beneficial
+              strains. Eliminate artificial sweeteners — evidence shows saccharin, aspartame,
+              and sucralose directly reduce Bifidobacterium abundance.
+            </div>
+            <div class="reco-tags">
+              <span class="reco-tag">B. longum · B. breve · B. infantis (10B+ CFU)</span>
+              <span class="reco-tag">GOS prebiotic 5g/day</span>
+              <span class="reco-tag">Kefir · yogurt daily</span>
+              <span class="reco-tag">Eliminate artificial sweeteners</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="reco-item">
+          <div class="reco-num">3</div>
+          <div class="reco-body">
+            <div class="reco-title">Reduce Proteobacteria &amp; Inflammation</div>
+            <div class="reco-desc">
+              Goal: Lower Proteobacteria from 6.1% to &lt;4% to reduce inflammatory burden.
+              Omega-3 fatty acids and daily polyphenols are the frontline approach.
+              Temporarily reduce animal fats (promotes sulfate-reducing bacteria).
+              Consider berberine (900mg/day) or oregano oil under practitioner guidance
+              for antimicrobial botanical support.
+            </div>
+            <div class="reco-tags">
+              <span class="reco-tag">Omega-3 2–3g EPA/DHA/day</span>
+              <span class="reco-tag">Green tea · berries · pomegranate</span>
+              <span class="reco-tag">Dark chocolate (polyphenols)</span>
+              <span class="reco-tag">Berberine 900mg/day (practitioner)</span>
+              <span class="reco-tag">Reduce animal fat &amp; red meat</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Lifestyle foundations -->
+      <div class="lifestyle-block">
+        <div class="section-label" style="margin-bottom:0;">Lifestyle Foundations</div>
+        <div class="lifestyle-grid">
+          <div>
+            <div class="lifestyle-item-title">Exercise</div>
+            <div class="lifestyle-item-body">
+              &ge;150 min/week of moderate movement increases microbiome diversity by 20%+
+              and directly enhances SCFA production.
+            </div>
+          </div>
+          <div>
+            <div class="lifestyle-item-title">Sleep</div>
+            <div class="lifestyle-item-body">
+              7–9 hours with consistent timing supports circadian–microbiome alignment.
+              Disrupted sleep alters microbial composition.
+            </div>
+          </div>
+          <div>
+            <div class="lifestyle-item-title">Stress Management</div>
+            <div class="lifestyle-item-body">
+              Chronic stress directly reduces Bifidobacterium and increases intestinal
+              permeability. Meditation, yoga, or breathing exercises stabilize the gut–brain axis.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════
+         SECTION 06 — Monitoring Timeline
+    ═══════════════════════════════════════════ -->
+    <div class="section" style="padding-bottom:8px;border-bottom:none;">
+      <div class="section-label">06 · Monitoring</div>
+      <div class="section-title">Retesting &amp; Expected Progress</div>
+
+      <div class="timeline">
+        <div class="tl-step">
+          <div class="tl-dot" style="background:#4a9e3f;"></div>
+          <div class="tl-title">Today</div>
+          <div class="tl-body">Begin all three priority interventions simultaneously</div>
+        </div>
+        <div class="tl-step">
+          <div class="tl-dot" style="background:#7eca73;"></div>
+          <div class="tl-title">4 Weeks</div>
+          <div class="tl-body">Track symptoms: digestion, energy, mood improvements expected</div>
+        </div>
+        <div class="tl-step">
+          <div class="tl-dot" style="background:#9ed897;"></div>
+          <div class="tl-title">8–12 Weeks</div>
+          <div class="tl-body">Re-test. Target: butyrate &gt;5.1, Bifidobacterium &gt;10%, Proteobacteria &lt;4%</div>
+        </div>
+        <div class="tl-step">
+          <div class="tl-dot" style="background:#b8dbb2;"></div>
+          <div class="tl-title">6–12 Months</div>
+          <div class="tl-body">Ongoing maintenance monitoring cycle</div>
+        </div>
+      </div>
+
+      <div style="margin-top:40px;padding:20px 22px;background:#f5faf2;border-radius:10px;border:1px solid #d4e8c8;">
+        <div style="font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:1.5px;color:#3e7a35;margin-bottom:14px;">What to Track Between Tests</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+          <div>
+            <div class="lifestyle-item-title">Symptom Diary</div>
+            <div class="lifestyle-item-body">Bowel habits, energy levels, mood, bloating, digestive comfort</div>
+          </div>
+          <div>
+            <div class="lifestyle-item-title">Lifestyle Log</div>
+            <div class="lifestyle-item-body">Exercise frequency, sleep quality, stress levels, dietary changes</div>
+          </div>
+          <div>
+            <div class="lifestyle-item-title">Medications</div>
+            <div class="lifestyle-item-body">Any antibiotic courses, PPIs, or new medications — note dates</div>
+          </div>
+          <div>
+            <div class="lifestyle-item-title">Supplement Compliance</div>
+            <div class="lifestyle-item-body">Track daily probiotic, prebiotic GOS, omega-3 and tributyrin intake</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /content -->
+
+  <!-- ═══════════════════════════════════════════
+       FOOTER
+  ═══════════════════════════════════════════ -->
+  <div class="report-footer">
+    <strong style="font-weight:500;color:#3e7a35;">ABC Gut Diagnostics</strong> &nbsp;·&nbsp;
+    CLIA Certified Laboratory &nbsp;·&nbsp;
+    support@abcgut.com &nbsp;·&nbsp;
+    www.abcgut.com
+    <br><br>
+    <em>
+      This report is for informational purposes only and does not constitute medical advice.
+      All treatment decisions should be made in consultation with qualified healthcare professionals.
+      The statements in this report have not been evaluated by the FDA. This test is not intended
+      to diagnose, treat, cure, or prevent any disease. Report Version 2.0 · 2026 ·
+      Powered by Advanced Metagenomic Sequencing Technology.
+    </em>
+  </div>
+
+</div><!-- /report -->
+
+</body>
+</html>

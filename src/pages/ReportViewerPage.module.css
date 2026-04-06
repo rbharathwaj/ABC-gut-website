@@ -1,0 +1,605 @@
+/* ── Page shell ── */
+.page {
+  min-height: 100vh;
+  padding-top: 64px;
+  background: var(--green-pale);
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── Top bar ── */
+.topBar {
+  position: sticky;
+  top: 64px;
+  z-index: 50;
+  background: #fff;
+  border-bottom: 1px solid var(--green-border);
+  padding: 12px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.topBarLeft {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  min-width: 0;
+}
+
+.back {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 13px;
+  color: var(--green-mid);
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: color 0.2s;
+}
+
+.back:hover {
+  color: var(--green-dark);
+}
+
+.topBarTitle {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.topBarName {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--green-dark);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.topBarMeta {
+  font-size: 11px;
+  color: var(--green-sage);
+  font-weight: 300;
+}
+
+.downloadBtn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  padding: 9px 18px;
+  border-radius: 8px;
+  background: var(--green-pale);
+  border: 1px solid var(--green-border);
+  color: var(--green-dark);
+  font-family: 'DM Sans', sans-serif;
+  cursor: pointer;
+  transition: background 0.2s;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.downloadBtn:hover {
+  background: var(--green-bar);
+  border-color: var(--green);
+}
+
+/* ── Body: report + gutly ── */
+.body {
+  flex: 1;
+  display: flex;
+  align-items: flex-start;
+  gap: 0;
+}
+
+/* ── Report content ── */
+.reportContent {
+  flex: 1;
+  padding: 40px 40px 80px;
+  min-width: 0;
+}
+
+/* ── Sections ── */
+.section {
+  background: #fff;
+  border: 1px solid var(--green-border);
+  border-radius: 14px;
+  padding: 32px;
+  margin-bottom: 24px;
+}
+
+.sectionLabel {
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--green-sage);
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+
+.sectionTitle {
+  font-family: 'DM Serif Display', serif !important;
+  font-size: 24px !important;
+  color: var(--green-dark) !important;
+  margin-bottom: 20px !important;
+}
+
+.subsectionTitle {
+  font-family: 'DM Serif Display', serif !important;
+  font-size: 17px !important;
+  color: var(--green-dark) !important;
+  margin: 24px 0 14px !important;
+}
+
+/* ── Score hero ── */
+.scoreHero {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  margin-bottom: 24px;
+}
+
+.ring {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.ring svg { display: block; }
+
+.ringInner {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.ringNum {
+  font-family: 'DM Serif Display', serif;
+  font-size: 32px;
+  color: var(--green-dark);
+  line-height: 1;
+}
+
+.ringDenom {
+  font-size: 12px;
+  color: var(--green-sage);
+}
+
+.scoreDesc {}
+
+.scoreStatus {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--green);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 8px;
+}
+
+.scoreNote {
+  font-size: 14px;
+  color: var(--green-mid);
+  font-weight: 300;
+  line-height: 1.7;
+}
+
+/* ── Metric cards ── */
+.metricsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.metricCard {
+  background: var(--green-pale);
+  border: 1px solid var(--green-border);
+  border-radius: 10px;
+  padding: 16px;
+}
+
+.metricLabel {
+  font-size: 11px;
+  color: var(--green-sage);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+
+.metricValue {
+  font-family: 'DM Serif Display', serif;
+  font-size: 22px;
+  color: var(--green-dark);
+  margin-bottom: 6px;
+}
+
+.metricRef {
+  font-size: 11px;
+  color: var(--green-sage);
+  margin-top: 4px;
+}
+
+.badge {
+  font-size: 10px;
+  font-weight: 500;
+  padding: 2px 8px;
+  border-radius: 20px;
+  display: inline-block;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  background: #e2f2db;
+  color: #2e6e25;
+}
+
+/* ── Findings ── */
+.findingsGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.findingsCard {
+  border-radius: 10px;
+  padding: 18px;
+  border: 1px solid;
+}
+
+.positive {
+  background: #f5faf2;
+  border-color: #c2debb;
+}
+
+.improve {
+  background: #fffdf5;
+  border-color: #e8d8aa;
+}
+
+.findingsTitle {
+  font-size: 10px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  margin-bottom: 12px;
+}
+
+.positive .findingsTitle { color: #3e7a35; }
+.improve  .findingsTitle { color: #7a6020; }
+
+.findingItem {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 8px;
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--green-mid);
+  font-weight: 300;
+}
+
+.findingDot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  margin-top: 6px;
+  flex-shrink: 0;
+}
+
+.dotGreen { background: var(--green); }
+.dotWarn  { background: #c08a20; }
+
+/* ── Bars ── */
+.barRows {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.barRow {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.barTop {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.barName {
+  font-size: 13px;
+  color: var(--green-dark);
+}
+
+.barPct {
+  font-size: 12px;
+  color: var(--green-mid);
+}
+
+.barWarn { color: #c08a20; }
+
+.barRef {
+  font-size: 11px;
+  color: var(--green-sage);
+}
+
+.barWarn .barRef { color: #c08a20; }
+
+.barTrack {
+  height: 5px;
+  background: var(--green-bar);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.barFill {
+  height: 100%;
+  border-radius: 3px;
+}
+
+/* ── Alert boxes ── */
+.alertBox {
+  padding: 14px 18px;
+  border-radius: 8px;
+  background: #f5faf2;
+  border: 1px solid #c2debb;
+  margin-top: 16px;
+}
+
+.alertDanger {
+  background: #fde8e8;
+  border-color: #f5b8b8;
+}
+
+.alertTitle {
+  font-size: 12px;
+  font-weight: 500;
+  margin-bottom: 4px;
+  color: #2e6e25;
+}
+
+.alertDanger .alertTitle { color: #7a2020; }
+
+.alertBody {
+  font-size: 12px;
+  color: #2e6e25;
+  font-weight: 300;
+  line-height: 1.65;
+}
+
+.alertDanger .alertBody { color: #7a2020; }
+
+/* ── SCFA cards ── */
+.scfaGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  margin-bottom: 14px;
+}
+
+.scfaCard {
+  border-radius: 10px;
+  padding: 18px 16px;
+  text-align: center;
+  border: 1px solid;
+}
+
+.scfaCritical { background: #fde8e8; border-color: #f5b8b8; }
+.scfaGood     { background: #f5faf2; border-color: #c2debb; }
+
+.scfaName {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  font-weight: 500;
+  margin-bottom: 10px;
+}
+
+.scfaCritical .scfaName { color: #7a2020; }
+.scfaGood     .scfaName { color: #3e7a35; }
+
+.scfaNum {
+  font-family: 'DM Serif Display', serif;
+  font-size: 28px;
+  color: var(--green-dark);
+  line-height: 1;
+}
+
+.scfaUnit   { font-size: 11px; color: var(--green-sage); margin-bottom: 8px; }
+.scfaTarget { font-size: 11px; color: var(--green-sage); }
+.scfaAlert  { font-size: 11px; color: #9a2020; font-weight: 500; margin-top: 6px; }
+.scfaOk     { font-size: 11px; color: #3e7a35; font-weight: 500; margin-top: 6px; }
+
+/* ── Disease risk panels ── */
+.disclaimer {
+  font-size: 12px;
+  color: var(--green-sage);
+  font-weight: 300;
+  margin-bottom: 20px;
+}
+
+.panelsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.panelCard {
+  border: 1px solid var(--green-border);
+  border-radius: 10px;
+  padding: 16px;
+  background: #fff;
+}
+
+.panelName {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--green-dark);
+  margin-bottom: 8px;
+}
+
+.panelBadge {
+  font-size: 10px;
+  font-weight: 500;
+  padding: 2px 8px;
+  border-radius: 20px;
+  display: inline-block;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  margin-bottom: 8px;
+}
+
+.panelBadgeGood { background: #e2f2db; color: #2e6e25; }
+.panelBadgeWarn { background: #fef3da; color: #7a5800; }
+
+.panelNote {
+  font-size: 11px;
+  color: var(--green-sage);
+  font-weight: 300;
+  line-height: 1.5;
+}
+
+/* ── Recommendations ── */
+.recoList {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.recoItem {
+  display: flex;
+  gap: 16px;
+  padding: 20px;
+  border-radius: 10px;
+  border: 1px solid var(--green-border);
+  background: var(--green-pale);
+}
+
+.recoNum {
+  font-family: 'DM Serif Display', serif;
+  font-size: 28px;
+  color: var(--green-border);
+  line-height: 1;
+  min-width: 24px;
+  flex-shrink: 0;
+}
+
+.recoTitle {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--green-dark);
+  margin-bottom: 6px;
+}
+
+.recoDesc {
+  font-size: 13px;
+  color: var(--green-mid);
+  font-weight: 300;
+  line-height: 1.65;
+  margin-bottom: 12px;
+}
+
+.recoTags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.recoTag {
+  font-size: 11px;
+  background: #ddf0d6;
+  color: #2e6e25;
+  padding: 3px 10px;
+  border-radius: 20px;
+}
+
+/* ── Gutly sidebar ── */
+.gutlySidebar {
+  width: 360px;
+  flex-shrink: 0;
+  position: sticky;
+  top: 120px; /* navbar + topbar height */
+  height: calc(100vh - 120px);
+  border-left: 1px solid var(--green-border);
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+}
+
+.gutlyHeader {
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--green-border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-shrink: 0;
+}
+
+.gutlyHeaderLeft {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.gutlyDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--green);
+  box-shadow: 0 0 0 2px rgba(74,158,63,0.2);
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { box-shadow: 0 0 0 2px rgba(74,158,63,0.2); }
+  50% { box-shadow: 0 0 0 4px rgba(74,158,63,0.1); }
+}
+
+.gutlyTitle {
+  font-family: 'DM Serif Display', serif;
+  font-size: 17px;
+  color: var(--green-dark);
+}
+
+.gutlySub {
+  font-size: 11px;
+  color: var(--green-sage);
+  font-weight: 300;
+}
+
+.gutlyChat {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── Responsive ── */
+@media (max-width: 1100px) {
+  .gutlySidebar {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .reportContent {
+    padding: 20px 16px 60px;
+  }
+
+  .metricsGrid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .findingsGrid,
+  .scfaGrid,
+  .panelsGrid {
+    grid-template-columns: 1fr;
+  }
+}

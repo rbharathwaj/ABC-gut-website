@@ -1,0 +1,105 @@
+.wrapper {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+}
+
+.heading {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: default;
+}
+
+.hintIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--green-border);
+  color: var(--green-mid);
+  font-size: 11px;
+  font-weight: 600;
+  font-family: 'DM Sans', sans-serif;
+  flex-shrink: 0;
+  cursor: help;
+  transition: background 0.2s;
+  user-select: none;
+}
+
+.wrapper:hover .hintIcon {
+  background: var(--green);
+  color: #fff;
+}
+
+/* ── Tooltip card ── */
+.tooltip {
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 0;
+  z-index: 200;
+  background: #fff;
+  border: 1px solid var(--green-border);
+  border-radius: 12px;
+  padding: 18px 20px;
+  width: 320px;
+  box-shadow: 0 8px 32px rgba(30, 60, 20, 0.12);
+  animation: fadeIn 0.15s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.tooltipTitle {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--green-dark);
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  margin-bottom: 8px;
+}
+
+.tooltipDef {
+  font-size: 13px;
+  color: var(--green-mid);
+  font-weight: 300;
+  line-height: 1.65;
+  margin-bottom: 14px;
+}
+
+.askBtn {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--green);
+  background: var(--green-pale);
+  border: 1px solid var(--green-border);
+  border-radius: 8px;
+  padding: 8px 12px;
+  width: 100%;
+  font-family: 'DM Sans', sans-serif;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.askBtn:hover {
+  background: var(--green-bar);
+}
+
+.askBtn svg {
+  margin-left: auto;
+}
+
+.askDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--green);
+  flex-shrink: 0;
+}

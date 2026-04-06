@@ -1,4 +1,3 @@
-import { Link } from 'react-router-dom'
 import styles from './Hero.module.css'
 
 export default function Hero() {
@@ -12,10 +11,11 @@ export default function Hero() {
         <p className={styles.sub}>
           The most comprehensive microbiome test available. We sequence 100% of your gut DNA
           and deliver a personalized action plan — not just raw data.
+          Every report includes access to <strong>Gutly</strong>, our AI health assistant.
         </p>
         <div className={styles.ctas}>
-          <a href="#pricing" className={styles.btnPrimary}>Order Your Kit — from $299</a>
-          <Link to="/chat" className={styles.btnSecondary}>Ask Gutly</Link>
+          <a href="#pricing" className={styles.btnPrimary}>Order Your Kit — from $205</a>
+          <a href="#how-it-works" className={styles.btnSecondary}>See How It Works</a>
         </div>
         <div className={styles.trust}>
           <span>Results in 2–3 weeks</span>

@@ -1,0 +1,491 @@
+.page {
+  display: flex;
+  min-height: 100vh;
+  padding-top: 64px;
+  background: var(--green-pale);
+}
+
+/* ── Sidebar ── */
+.sidebar {
+  width: 240px;
+  flex-shrink: 0;
+  background: #fff;
+  border-right: 1px solid var(--green-border);
+  position: fixed;
+  top: 64px;
+  bottom: 0;
+  left: 0;
+  overflow-y: auto;
+  z-index: 10;
+}
+
+.sidebarInner {
+  padding: 28px 20px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 32px;
+}
+
+.brandDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--green);
+}
+
+.brandName {
+  font-family: 'DM Serif Display', serif;
+  font-size: 16px;
+  color: var(--green-dark);
+}
+
+.sideNav {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+}
+
+.sideLink {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  font-size: 14px;
+  color: var(--green-mid);
+  font-weight: 400;
+  transition: background 0.15s, color 0.15s;
+}
+
+.sideLink:hover {
+  background: var(--green-pale);
+  color: var(--green-dark);
+}
+
+.sideLinkActive {
+  background: var(--green-pale);
+  color: var(--green-dark);
+  font-weight: 500;
+}
+
+.sideLinkIcon {
+  width: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--green-sage);
+  flex-shrink: 0;
+}
+
+.sideLinkActive .sideLinkIcon {
+  color: var(--green);
+}
+
+.sidebarFooter {
+  border-top: 1px solid var(--green-border);
+  padding-top: 20px;
+  margin-top: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.userInfo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.userAvatar {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: var(--green);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 500;
+  flex-shrink: 0;
+}
+
+.userName {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--green-dark);
+}
+
+.userEmail {
+  font-size: 11px;
+  color: var(--green-sage);
+  margin-top: 2px;
+  word-break: break-all;
+}
+
+.signOut {
+  font-size: 13px;
+  color: var(--green-mid);
+  background: none;
+  font-family: 'DM Sans', sans-serif;
+  text-align: left;
+  padding: 0;
+  transition: color 0.2s;
+}
+
+.signOut:hover {
+  color: var(--bad-text);
+}
+
+/* ── Main ── */
+.main {
+  flex: 1;
+  margin-left: 240px;
+  padding: 40px 48px 64px;
+  max-width: 1000px;
+}
+
+.topBar {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 40px;
+  gap: 20px;
+}
+
+.welcome {
+  font-family: 'DM Serif Display', serif;
+  font-size: 32px;
+  color: var(--green-dark);
+  font-weight: 400;
+  margin-bottom: 4px;
+}
+
+.welcomeSub {
+  font-size: 15px;
+  color: var(--green-mid);
+  font-weight: 300;
+}
+
+.gutlyBtn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 11px 22px;
+  background: var(--green);
+  color: #fff;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 500;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: background 0.2s;
+}
+
+.gutlyBtn:hover {
+  background: var(--green-accent);
+}
+
+.gutlyDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.7);
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+/* ── Section ── */
+.section {
+  margin-bottom: 48px;
+}
+
+.sectionHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.sectionTitle {
+  font-family: 'DM Serif Display', serif;
+  font-size: 22px;
+  color: var(--green-dark);
+  font-weight: 400;
+  margin-bottom: 20px;
+}
+
+.sectionHeader .sectionTitle {
+  margin-bottom: 0;
+}
+
+.sectionCount {
+  font-size: 12px;
+  color: var(--green-sage);
+  background: var(--green-bar);
+  padding: 3px 10px;
+  border-radius: 20px;
+}
+
+/* ── Empty state ── */
+.empty {
+  background: #fff;
+  border: 1px solid var(--green-border);
+  border-radius: 12px;
+  padding: 40px 32px;
+  text-align: center;
+}
+
+.empty p {
+  font-size: 15px;
+  color: var(--green-mid);
+  font-weight: 300;
+  margin-bottom: 20px;
+}
+
+.emptyBtn {
+  display: inline-block;
+  padding: 11px 24px;
+  background: var(--green);
+  color: #fff;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  transition: background 0.2s;
+}
+
+.emptyBtn:hover {
+  background: var(--green-accent);
+}
+
+/* ── Report card ── */
+.reportGrid {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.reportCard {
+  background: #fff;
+  border: 1px solid var(--green-border);
+  border-radius: 14px;
+  padding: 28px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.reportCardLeft {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  flex: 1;
+  min-width: 0;
+}
+
+.reportScore {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.reportScore svg {
+  display: block;
+}
+
+.reportScoreText {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.reportScoreNum {
+  font-family: 'DM Serif Display', serif;
+  font-size: 22px;
+  color: var(--green-dark);
+  line-height: 1;
+}
+
+.reportScoreDenom {
+  font-size: 10px;
+  color: var(--green-sage);
+}
+
+.reportMeta {
+  flex: 1;
+  min-width: 0;
+}
+
+.reportTitle {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--green-dark);
+  margin-bottom: 6px;
+}
+
+.reportDates {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--green-mid);
+  font-weight: 300;
+  margin-bottom: 4px;
+  flex-wrap: wrap;
+}
+
+.reportIds {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  color: var(--green-sage);
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+
+.metaDot {
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: var(--green-border);
+  flex-shrink: 0;
+}
+
+.reportBadge {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: var(--green-accent);
+  background: #e2f2db;
+  padding: 3px 10px;
+  border-radius: 20px;
+}
+
+.reportCardRight {
+  flex-shrink: 0;
+}
+
+.reportCardRight {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.viewBtn {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 10px 20px;
+  border: 1px solid var(--green);
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #fff;
+  background: var(--green);
+  transition: background 0.2s;
+  white-space: nowrap;
+}
+
+.viewBtn:hover {
+  background: var(--green-accent);
+}
+
+.downloadBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 8px 20px;
+  border: 1px solid var(--green-border);
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--green-mid);
+  background: var(--green-pale);
+  transition: background 0.2s;
+  white-space: nowrap;
+}
+
+.downloadBtn:hover {
+  background: var(--green-bar);
+}
+
+/* ── Next steps ── */
+.nextGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.nextCard {
+  background: #fff;
+  border: 1px solid var(--green-border);
+  border-radius: 12px;
+  padding: 24px;
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+.nextNum {
+  font-family: 'DM Serif Display', serif;
+  font-size: 22px;
+  color: var(--green-border);
+  line-height: 1;
+  flex-shrink: 0;
+  min-width: 28px;
+}
+
+.nextTitle {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--green-dark);
+  margin-bottom: 6px;
+}
+
+.nextBody {
+  font-size: 13px;
+  color: var(--green-mid);
+  font-weight: 300;
+  line-height: 1.65;
+}
+
+/* ── Responsive ── */
+@media (max-width: 900px) {
+  .sidebar {
+    display: none;
+  }
+
+  .main {
+    margin-left: 0;
+    padding: 24px 20px 48px;
+  }
+
+  .nextGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .reportCard {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

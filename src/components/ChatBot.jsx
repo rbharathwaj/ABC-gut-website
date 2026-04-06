@@ -28,7 +28,8 @@ function getStubResponse(message) {
   return 'That\'s a great question about gut health. Our AI assistant will be fully operational soon. In the meantime, our team at support@abcgut.com can answer detailed questions about your microbiome, test results, or recommendations. You can also explore our science section for evidence-based information on key gut health markers.'
 }
 
-export default function ChatBot() {
+// triggerMessage: { text: string, id: number } — when id changes, the message is auto-sent
+export default function ChatBot({ triggerMessage }) {
   const [messages, setMessages] = useState([
     {
       role: 'assistant',
@@ -42,6 +43,14 @@ export default function ChatBot() {
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: 'smooth' })
   }, [messages, loading])
+
+  // Auto-send when a tooltip's "Ask Gutly" button is clicked
+  useEffect(() => {
+    if (triggerMessage?.text && triggerMessage?.id) {
+      sendMessage(triggerMessage.text)
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [triggerMessage?.id])
 
   function sendMessage(text) {
     if (!text.trim()) return
