@@ -6,6 +6,7 @@ import styles from './Navbar.module.css'
 const NAV_LINKS = [
   { label: 'How It Works', href: '/#how-it-works' },
   { label: 'What You Get', href: '/#features' },
+  { label: 'Gutly AI', href: '/#gutly' },
   { label: 'Pricing', href: '/#pricing' },
   { label: 'Science', href: '/#science' },
 ]
@@ -27,7 +28,7 @@ export default function Navbar() {
   return (
     <header className={`${styles.header} ${scrolled ? styles.scrolled : ''}`}>
       <nav className={styles.nav}>
-        <Link to={user ? '/dashboard' : '/'} className={styles.brand}>
+        <Link to="/" className={styles.brand} onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
           <span className={styles.brandDot} />
           <span className={styles.brandName}>ABC Gut</span>
         </Link>
