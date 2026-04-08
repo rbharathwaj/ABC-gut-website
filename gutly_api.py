@@ -1,6 +1,7 @@
 import os
 import fitz
 import numpy as np
+from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
@@ -26,7 +27,26 @@ BETA = 0.6
 client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 STOPWORDS = set(stopwords.words("english"))
 
-app = FastAPI()
+# globals populated at startup
+docs = []
+bm25 = None
+embed_model = None
+reranker = None
+faiss_index = None
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    global docs, bm25, embed_model, reranker, faiss_index
+    print("Loading models...")
+    docs = load_documents(PDF_FOLDER)
+    bm25 = build_bm25(docs)
+    embed_model = SentenceTransformer("BAAI/bge-base-en-v1.5")
+    reranker = CrossEncoder("cross-encoder/ms-marco-MiniLM-L-6-v2")
+    faiss_index = build_faiss(docs, embed_model)
+    print("Server ready!")
+    yield
+
+app = FastAPI(lifespan=lifespan)
 
 app.add_middleware(
     CORSMiddleware,
@@ -220,21 +240,6 @@ def answer_query(query, docs, bm25, faiss_index, model, reranker):
     sources = [docs[i]["source"] for i in top_idx]
 
     return answer, sources
-
-# =========================
-# GLOBAL LOAD (IMPORTANT)
-# =========================
-print("Loading models...")
-
-docs = load_documents(PDF_FOLDER)
-bm25 = build_bm25(docs)
-
-embed_model = SentenceTransformer("BAAI/bge-base-en-v1.5")
-reranker = CrossEncoder("cross-encoder/ms-marco-MiniLM-L-6-v2")
-
-faiss_index = build_faiss(docs, embed_model)
-
-print("Server ready!")
 
 # =========================
 # API ENDPOINT
