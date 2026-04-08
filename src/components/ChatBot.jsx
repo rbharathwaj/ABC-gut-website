@@ -59,18 +59,23 @@ export default function ChatBot({ triggerMessage }) {
     setInput('')
     setLoading(true)
 
-    // TODO: replace this stub with a real API call when backend is ready
-    // Example:
-    // fetch('/api/chat', { method: 'POST', body: JSON.stringify({ message: text }) })
-    //   .then(r => r.json())
-    //   .then(data => {
-    //     setMessages(prev => [...prev, { role: 'assistant', text: data.reply }])
-    //     setLoading(false)
-    //   })
-    setTimeout(() => {
-      setMessages(prev => [...prev, { role: 'assistant', text: getStubResponse(text) }])
-      setLoading(false)
-    }, 900)
+    fetch('http://localhost:8000/query', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ query: text }),
+    })
+      .then(r => r.json())
+      .then(data => {
+        const sources = data.sources?.length
+          ? `\n\nSources: ${data.sources.join(', ')}`
+          : ''
+        setMessages(prev => [...prev, { role: 'assistant', text: data.answer + sources }])
+        setLoading(false)
+      })
+      .catch(() => {
+        setMessages(prev => [...prev, { role: 'assistant', text: getStubResponse(text) }])
+        setLoading(false)
+      })
   }
 
   function handleSubmit(e) {
