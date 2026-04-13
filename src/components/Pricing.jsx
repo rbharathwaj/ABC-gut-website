@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import styles from './Pricing.module.css'
 
 export default function Pricing() {
@@ -54,7 +55,7 @@ export default function Pricing() {
                 </li>
               ))}
             </ul>
-            <a href="#" className={styles.cta}>Order a Kit</a>
+            <Link to="/signup?plan=kit" className={styles.cta}>Order a Kit</Link>
           </div>
 
           {/* Subscription */}
@@ -81,7 +82,7 @@ export default function Pricing() {
                 </li>
               ))}
             </ul>
-            <a href="#" className={`${styles.cta} ${styles.ctaFeatured}`}>Start Subscription</a>
+            <Link to="/signup?plan=annual" className={`${styles.cta} ${styles.ctaFeatured}`}>Start Subscription</Link>
           </div>
 
         </div>

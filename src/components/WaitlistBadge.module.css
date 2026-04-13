@@ -1,0 +1,143 @@
+.badge {
+  position: fixed;
+  bottom: 28px;
+  right: 28px;
+  z-index: 900;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 10px;
+}
+
+.trigger {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--green);
+  color: #fff;
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  padding: 14px 26px;
+  border-radius: 999px;
+  box-shadow: 0 4px 18px rgba(74,158,63,0.35);
+  cursor: pointer;
+  border: none;
+  transition: background 0.2s, transform 0.15s;
+  position: relative;
+}
+
+.trigger:hover {
+  background: var(--green-accent);
+  transform: translateY(-1px);
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  background: #7fffac;
+  border-radius: 50%;
+  animation: pulse 2s infinite;
+  flex-shrink: 0;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%       { opacity: 0.55; transform: scale(1.35); }
+}
+
+/* ── expanded form card ── */
+.card {
+  background: #fff;
+  border: 1px solid var(--green-border);
+  border-radius: 16px;
+  padding: 20px 20px 18px;
+  width: 300px;
+  box-shadow: 0 8px 32px rgba(26,46,26,0.12);
+  animation: slideUp 0.2s ease;
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.cardTitle {
+  font-family: 'DM Serif Display', serif;
+  font-size: 1.1rem;
+  color: var(--green-dark);
+  margin-bottom: 4px;
+}
+
+.cardSub {
+  font-size: 0.78rem;
+  color: var(--green-mid);
+  margin-bottom: 14px;
+  line-height: 1.4;
+}
+
+.nameRow {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.nameRow .input {
+  margin-bottom: 0;
+}
+
+.input {
+  width: 100%;
+  padding: 9px 12px;
+  border: 1px solid var(--green-border);
+  border-radius: 8px;
+  font-size: 0.85rem;
+  color: var(--green-dark);
+  background: var(--green-pale);
+  margin-bottom: 10px;
+  outline: none;
+  transition: border-color 0.15s;
+}
+
+.input:focus {
+  border-color: var(--green);
+}
+
+.submit {
+  width: 100%;
+  padding: 9px;
+  background: var(--green);
+  color: #fff;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  transition: background 0.2s;
+}
+
+.submit:hover {
+  background: var(--green-accent);
+}
+
+.success {
+  font-size: 0.85rem;
+  color: var(--green-accent);
+  text-align: center;
+  padding: 6px 0 2px;
+  font-weight: 600;
+}
+
+.close {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  background: none;
+  border: none;
+  font-size: 1rem;
+  color: var(--green-mid);
+  cursor: pointer;
+  line-height: 1;
+}
+
+.close:hover {
+  color: var(--green-dark);
+}

@@ -73,7 +73,7 @@ export default function LoginPage() {
 
         <p className={styles.hint}>
           Don't have an account?{' '}
-          <a href="/#pricing" className={styles.hintLink}>Order a kit</a> to get access.
+          <Link to="/signup" className={styles.hintLink}>Sign up</Link>
         </p>
       </div>
     </div>
