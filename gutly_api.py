@@ -11,6 +11,7 @@ import faiss
 from openai import OpenAI
 import nltk
 from nltk.corpus import stopwords
+from collections import defaultdict
 
 # =========================
 # SETUP
@@ -23,53 +24,29 @@ MODEL_NAME = "gpt-5-nano"
 
 ALPHA = 0.4
 BETA = 0.6
+CONFIDENCE_THRESHOLD = 0.35
 
 client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 STOPWORDS = set(stopwords.words("english"))
 
-# globals populated at startup
+# memory
+conversation_memory = defaultdict(list)
+
+# globals
 docs = []
 bm25 = None
 embed_model = None
 reranker = None
 faiss_index = None
 
-@asynccontextmanager
-async def lifespan(app: FastAPI):
-    global docs, bm25, embed_model, reranker, faiss_index
-    print("Loading models...")
-    docs = load_documents(PDF_FOLDER)
-    bm25 = build_bm25(docs)
-    embed_model = SentenceTransformer("BAAI/bge-base-en-v1.5")
-    reranker = CrossEncoder("cross-encoder/ms-marco-MiniLM-L-6-v2")
-    faiss_index = build_faiss(docs, embed_model)
-    print("Server ready!")
-    yield
-
-app = FastAPI(lifespan=lifespan)
-
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["http://localhost:5173"],
-    allow_methods=["POST"],
-    allow_headers=["Content-Type"],
-)
-
 # =========================
-# REQUEST MODEL
-# =========================
-class QueryRequest(BaseModel):
-    query: str
-
-# =========================
-# UTILS
+# TOKENIZATION
 # =========================
 def tokenize(text):
     return [w.lower() for w in text.split() if w.lower() not in STOPWORDS]
 
 def extract_query_terms(query):
-    words = [w.lower() for w in query.split() if w.lower() not in STOPWORDS]
-    return [w for w in words if len(w) > 3]
+    return [w.lower() for w in query.split() if len(w) > 3 and w not in STOPWORDS]
 
 # =========================
 # LOAD DOCUMENTS
@@ -110,7 +87,6 @@ def build_faiss(docs, model):
 
     index = faiss.IndexFlatL2(embeddings.shape[1])
     index.add(embeddings)
-
     return index
 
 # =========================
@@ -136,6 +112,11 @@ def hybrid_search(query, bm25, faiss_index, model, docs):
     boost = np.array([keyword_boost(d["text"], query_terms) for d in docs])
     hybrid += 0.3 * boost
 
+    # normalize again
+    hybrid = (hybrid - hybrid.min()) / (hybrid.max() + 1e-8)
+
+    confidence = float(np.max(hybrid))
+
     indices = np.argsort(hybrid)[::-1]
 
     top_idx = []
@@ -149,7 +130,7 @@ def hybrid_search(query, bm25, faiss_index, model, docs):
         if len(top_idx) >= TOP_K:
             break
 
-    return top_idx
+    return top_idx, confidence
 
 # =========================
 # PASSAGE SELECTION
@@ -160,12 +141,10 @@ def get_best_passage(text, query, model, reranker):
     candidates = []
     for line in lines:
         line = line.strip()
-
         if len(line) < 80:
             continue
 
         lower = line.lower()
-
         if any(x in lower for x in ["license", "doi", "author"]):
             continue
         if "[" in line and "]" in line:
@@ -178,7 +157,6 @@ def get_best_passage(text, query, model, reranker):
     if not candidates:
         return text[:1000]
 
-    # embedding shortlist
     query_emb = model.encode([query])[0]
     line_embs = model.encode(candidates)
 
@@ -189,73 +167,227 @@ def get_best_passage(text, query, model, reranker):
     top_idx = np.argsort(scores)[-10:]
     shortlisted = [candidates[i] for i in top_idx]
 
-    # rerank
     pairs = [(query, s) for s in shortlisted]
     rerank_scores = reranker.predict(pairs)
 
     return shortlisted[np.argmax(rerank_scores)]
 
 # =========================
-# ANSWERING
+# QUERY CLASSIFIER
 # =========================
-def build_prompt(context, query):
+def is_general_query(query):
+    keywords = ["what is", "who is", "define", "capital", "history"]
+    return any(k in query.lower() for k in keywords)
+
+# =========================
+# PROMPTS
+# =========================
+def build_prompt(context, query, history):
+    history_text = ""
+    for hq, ha in history[-3:]:
+        history_text += f"Q: {hq}\nA: {ha}\n\n"
+
     return f"""
 You are a biomedical research assistant.
 
-Answer clearly and confidently.
-
-Structure:
-1. Direct answer
-2. Supporting evidence
-3. Evidence strength
+Conversation History:
+{history_text}
 
 Context:
 {context}
 
 Question:
 {query}
+
+Answer with:
+1. Direct answer
+2. Supporting evidence
+3. Evidence strength
 """
 
+def build_general_prompt(query, history):
+    history_text = ""
+    for hq, ha in history[-3:]:
+        history_text += f"Q: {hq}\nA: {ha}\n\n"
+
+    return f"""
+You are a knowledgeable assistant.
+
+Conversation History:
+{history_text}
+
+Question:
+{query}
+
+Answer clearly and directly.
+"""
+
+# =========================
+# RESPONSE EXTRACTION (FIXED)
+# =========================
+def extract_text(resp):
+    try:
+        for item in resp.output:
+            if item.type == "message":
+                for c in item.content:
+                    if hasattr(c, "text"):
+                        return c.text
+    except Exception:
+        pass
+    return None
+
+# =========================
+# LLM CALL
+# =========================
 def generate_answer(prompt):
     resp = client.responses.create(
         model=MODEL_NAME,
         input=[{"role": "user", "content": prompt}],
-        max_output_tokens=500,
+        max_output_tokens=800,
         reasoning={"effort": "low"},
         text={"verbosity": "high"},
     )
-    return resp.output_text
 
-def answer_query(query, docs, bm25, faiss_index, model, reranker):
-    top_idx = hybrid_search(query, bm25, faiss_index, model, docs)
+    text = extract_text(resp)
 
-    context = ""
-    for i, idx in enumerate(top_idx):
-        doc = docs[idx]
-        best = get_best_passage(doc["text"], query, model, reranker)
+    if text and text.strip():
+        return text
 
-        context += f"[DOC {i} | {doc['source']}]\n{best}\n\n"
+    # fallback
+    resp2 = client.responses.create(
+        model="gpt-4o-mini",
+        input=prompt,
+        max_output_tokens=800,
+    )
 
-    answer = generate_answer(build_prompt(context, query))
-    sources = [docs[i]["source"] for i in top_idx]
-
-    return answer, sources
+    text2 = extract_text(resp2)
+    return text2 if text2 else "⚠️ No answer generated"
 
 # =========================
-# API ENDPOINT
+# MAIN PIPELINE
+# =========================
+def answer_query(query, session_id):
+    history = conversation_memory[session_id]
+
+    top_idx, confidence = hybrid_search(
+        query, bm25, faiss_index, embed_model, docs
+    )
+
+    use_rag = True
+
+    if confidence < CONFIDENCE_THRESHOLD or is_general_query(query):
+        use_rag = False
+
+    if use_rag:
+        context = ""
+        for i, idx in enumerate(top_idx):
+            doc = docs[idx]
+            best = get_best_passage(doc["text"], query, embed_model, reranker)
+            context += f"[DOC {i} | {doc['source']}]\n{best}\n\n"
+
+        prompt = build_prompt(context, query, history)
+        sources = [docs[i]["source"] for i in top_idx]
+    else:
+        prompt = build_general_prompt(query, history)
+        sources = []
+
+    answer = generate_answer(prompt)
+
+    history.append((query, answer))
+
+    return answer, sources, use_rag, confidence
+
+# =========================
+# PARSE OUTPUT FOR FRONTEND
+# =========================
+def parse_answer_sections(answer_text):
+    sections = {
+        "direct": "",
+        "evidence": "",
+        "strength": ""
+    }
+
+    if not answer_text:
+        return sections
+
+    lines = answer_text.split("\n")
+    current = None
+
+    for line in lines:
+        l = line.lower()
+
+        if "direct answer" in l:
+            current = "direct"
+            continue
+        elif "supporting evidence" in l:
+            current = "evidence"
+            continue
+        elif "evidence strength" in l:
+            current = "strength"
+            continue
+
+        if current:
+            sections[current] += line + "\n"
+
+    return {k: v.strip() for k, v in sections.items()}
+
+# =========================
+# FASTAPI INIT
+# =========================
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    global docs, bm25, embed_model, reranker, faiss_index
+
+    print("Loading models...")
+    docs = load_documents(PDF_FOLDER)
+    bm25 = build_bm25(docs)
+    embed_model = SentenceTransformer("BAAI/bge-base-en-v1.5")
+    reranker = CrossEncoder("cross-encoder/ms-marco-MiniLM-L-6-v2")
+    faiss_index = build_faiss(docs, embed_model)
+
+    print("Server ready!")
+    yield
+
+app = FastAPI(lifespan=lifespan)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_methods=["POST"],
+    allow_headers=["Content-Type"],
+)
+
+# =========================
+# REQUEST MODEL
+# =========================
+class QueryRequest(BaseModel):
+    query: str
+    session_id: str = "default"
+
+# =========================
+# ENDPOINT
 # =========================
 @app.post("/query")
 def query_endpoint(req: QueryRequest):
-    answer, sources = answer_query(
+    answer, sources, used_rag, confidence = answer_query(
         req.query,
-        docs,
-        bm25,
-        faiss_index,
-        embed_model,
-        reranker
+        req.session_id
     )
 
+    parsed = parse_answer_sections(answer)
+
     return {
-        "answer": answer,
-        "sources": sources
+        "query": req.query,
+        "answer": {
+            "direct": parsed["direct"],
+            "evidence": parsed["evidence"],
+            "strength": parsed["strength"],
+            "raw": answer
+        },
+        "meta": {
+            "mode": "RAG" if used_rag else "LLM",
+            "confidence": round(confidence, 3),
+            "sources": sources,
+            "session_id": req.session_id
+        }
     }
