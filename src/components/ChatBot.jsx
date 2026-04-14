@@ -66,16 +66,39 @@ export default function ChatBot({ triggerMessage }) {
     })
       .then(r => r.json())
       .then(data => {
-        const sources = data.sources?.length
-          ? `\n\nSources: ${data.sources.join(', ')}`
-          : ''
-        setMessages(prev => [...prev, { role: 'assistant', text: data.answer + sources }])
-        setLoading(false)
-      })
-      .catch(() => {
-        setMessages(prev => [...prev, { role: 'assistant', text: getStubResponse(text) }])
-        setLoading(false)
-      })
+    const a = data.answer
+  
+    // fallback to raw if structured parsing fails
+    const text =
+      a.direct ||
+      a.raw ||
+      "⚠️ No answer generated"
+
+    const sources = data.meta?.sources?.length
+      ? `\n\nSources: ${data.meta.sources.join(', ')}`
+      : ''
+  
+    setMessages(prev => [
+      ...prev,
+      {
+        role: 'assistant',
+        text: text + sources
+      }
+    ])
+  
+    setLoading(false)
+  })
+      // .then(data => {
+      //   const sources = data.sources?.length
+      //     ? `\n\nSources: ${data.sources.join(', ')}`
+      //     : ''
+      //   setMessages(prev => [...prev, { role: 'assistant', text: data.answer + sources }])
+      //   setLoading(false)
+      // })
+      // .catch(() => {
+      //   setMessages(prev => [...prev, { role: 'assistant', text: getStubResponse(text) }])
+      //   setLoading(false)
+      // })
   }
 
   function handleSubmit(e) {
