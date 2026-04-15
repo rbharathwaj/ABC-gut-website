@@ -3,7 +3,7 @@ import { useNavigate, useSearchParams, Link } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import styles from './SignupPage.module.css'
 
-const API = 'http://170.9.226.113:8000'
+const API = 'https://api.abcgut.com'
 
 async function recordSignup(name, email, plan) {
   try {

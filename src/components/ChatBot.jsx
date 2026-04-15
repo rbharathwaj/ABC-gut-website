@@ -68,7 +68,7 @@ export default function ChatBot({ triggerMessage }) {
     setInput('')
     setLoading(true)
 
-    fetch('http://170.9.226.113:8000/query', {
+    fetch('https://api.abcgut.com/query', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -229,7 +229,7 @@ export default function ChatBot({ triggerMessage }) {
 //     setInput('')
 //     setLoading(true)
 
-//     fetch('http://170.9.226.113:8000/query', {
+//     fetch('https://api.abcgut.com/query', {
 //       method: 'POST',
 //       headers: { 'Content-Type': 'application/json' },
 //       body: JSON.stringify({ query: text }),

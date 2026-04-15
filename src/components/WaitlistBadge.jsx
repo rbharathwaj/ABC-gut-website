@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import s from './WaitlistBadge.module.css'
 
-const API = 'http://170.9.226.113:8000'
+const API = 'https://api.abcgut.com'
 
 export default function WaitlistBadge() {
   const [open, setOpen]         = useState(false)
