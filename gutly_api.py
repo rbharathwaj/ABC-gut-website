@@ -225,45 +225,15 @@ Answer clearly and directly.
 """
 
 # =========================
-# RESPONSE EXTRACTION (FIXED)
-# =========================
-def extract_text(resp):
-    try:
-        for item in resp.output:
-            if item.type == "message":
-                for c in item.content:
-                    if hasattr(c, "text"):
-                        return c.text
-    except Exception:
-        pass
-    return None
-
-# =========================
 # LLM CALL
 # =========================
 def generate_answer(prompt):
-    resp = client.responses.create(
+    resp = client.chat.completions.create(
         model=MODEL_NAME,
-        input=[{"role": "user", "content": prompt}],
-        max_output_tokens=800,
-        reasoning={"effort": "low"},
-        text={"verbosity": "high"},
+        messages=[{"role": "user", "content": prompt}],
+        max_tokens=800,
     )
-
-    text = extract_text(resp)
-
-    if text and text.strip():
-        return text
-
-    # fallback
-    resp2 = client.responses.create(
-        model="gpt-4o-mini",
-        input=prompt,
-        max_output_tokens=800,
-    )
-
-    text2 = extract_text(resp2)
-    return text2 if text2 else "⚠️ No answer generated"
+    return resp.choices[0].message.content or "⚠️ No answer generated"
 
 # =========================
 # MAIN PIPELINE
