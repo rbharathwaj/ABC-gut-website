@@ -1,8 +1,10 @@
 import os
+import sqlite3
 import fitz
 import numpy as np
 from contextlib import asynccontextmanager
-from fastapi import FastAPI
+from datetime import datetime, timezone
+from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from rank_bm25 import BM25Okapi
@@ -20,7 +22,7 @@ nltk.download("stopwords")
 
 PDF_FOLDER = "papers"
 TOP_K = 3
-MODEL_NAME = "gpt-5-nano"
+MODEL_NAME = "gpt-4o-mini"
 
 ALPHA = 0.4
 BETA = 0.6
@@ -332,12 +334,45 @@ def parse_answer_sections(answer_text):
     return {k: v.strip() for k, v in sections.items()}
 
 # =========================
+# DATABASE
+# =========================
+DB_PATH = "abcgut.db"
+
+def init_db():
+    con = sqlite3.connect(DB_PATH)
+    cur = con.cursor()
+    cur.execute("""
+        CREATE TABLE IF NOT EXISTS waitlist (
+            id        INTEGER PRIMARY KEY AUTOINCREMENT,
+            first_name TEXT,
+            last_name  TEXT,
+            email      TEXT NOT NULL,
+            joined_at  TEXT NOT NULL
+        )
+    """)
+    cur.execute("""
+        CREATE TABLE IF NOT EXISTS signups (
+            id         INTEGER PRIMARY KEY AUTOINCREMENT,
+            name       TEXT NOT NULL,
+            email      TEXT NOT NULL UNIQUE,
+            plan       TEXT,
+            joined_at  TEXT NOT NULL
+        )
+    """)
+    con.commit()
+    con.close()
+
+def get_db():
+    return sqlite3.connect(DB_PATH)
+
+# =========================
 # FASTAPI INIT
 # =========================
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     global docs, bm25, embed_model, reranker, faiss_index
 
+    init_db()
     print("Loading models...")
     docs = load_documents(PDF_FOLDER)
     bm25 = build_bm25(docs)
@@ -353,20 +388,62 @@ app = FastAPI(lifespan=lifespan)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
-    allow_methods=["POST"],
+    allow_methods=["GET", "POST", "OPTIONS"],
     allow_headers=["Content-Type"],
 )
 
 # =========================
-# REQUEST MODEL
+# REQUEST MODELS
 # =========================
 class QueryRequest(BaseModel):
     query: str
     session_id: str = "default"
 
+class WaitlistRequest(BaseModel):
+    first_name: str = ""
+    last_name: str = ""
+    email: str
+
+class SignupRequest(BaseModel):
+    name: str
+    email: str
+    plan: str = ""
+
 # =========================
-# ENDPOINT
+# ENDPOINTS
 # =========================
+@app.post("/waitlist")
+def waitlist_endpoint(req: WaitlistRequest):
+    if not req.email:
+        raise HTTPException(status_code=400, detail="Email is required")
+    now = datetime.now(timezone.utc).isoformat()
+    con = get_db()
+    try:
+        con.execute(
+            "INSERT INTO waitlist (first_name, last_name, email, joined_at) VALUES (?, ?, ?, ?)",
+            (req.first_name, req.last_name, req.email, now)
+        )
+        con.commit()
+    finally:
+        con.close()
+    return {"ok": True}
+
+@app.post("/signup")
+def signup_endpoint(req: SignupRequest):
+    if not req.email or not req.name:
+        raise HTTPException(status_code=400, detail="Name and email are required")
+    now = datetime.now(timezone.utc).isoformat()
+    con = get_db()
+    try:
+        con.execute(
+            "INSERT OR IGNORE INTO signups (name, email, plan, joined_at) VALUES (?, ?, ?, ?)",
+            (req.name, req.email, req.plan, now)
+        )
+        con.commit()
+    finally:
+        con.close()
+    return {"ok": True}
+
 @app.post("/query")
 def query_endpoint(req: QueryRequest):
     answer, sources, used_rag, confidence = answer_query(

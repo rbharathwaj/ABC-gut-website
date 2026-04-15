@@ -126,6 +126,12 @@
   font-weight: 600;
 }
 
+.error {
+  font-size: 0.8rem;
+  color: #c0392b;
+  margin-bottom: 8px;
+}
+
 .close {
   position: absolute;
   top: 10px;

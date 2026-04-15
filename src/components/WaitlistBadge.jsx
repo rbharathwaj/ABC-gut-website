@@ -1,24 +1,40 @@
 import { useState } from 'react'
 import s from './WaitlistBadge.module.css'
 
+const API = 'http://170.9.226.113:8000'
+
 export default function WaitlistBadge() {
   const [open, setOpen]         = useState(false)
   const [firstName, setFirst]   = useState('')
   const [lastName, setLast]     = useState('')
   const [email, setEmail]       = useState('')
   const [submitted, setSubmit]  = useState(false)
+  const [loading, setLoading]   = useState(false)
+  const [error, setError]       = useState('')
 
   function handleClose() {
     setOpen(false); setSubmit(false)
-    setFirst(''); setLast(''); setEmail('')
+    setFirst(''); setLast(''); setEmail(''); setError('')
   }
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault()
     if (!email) return
-    // TODO: wire to backend / email service
-    console.log('Waitlist signup:', { firstName, lastName, email })
-    setSubmit(true)
+    setLoading(true)
+    setError('')
+    try {
+      const res = await fetch(`${API}/waitlist`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ first_name: firstName, last_name: lastName, email }),
+      })
+      if (!res.ok) throw new Error()
+      setSubmit(true)
+    } catch {
+      setError('Something went wrong. Please try again.')
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (
@@ -58,7 +74,10 @@ export default function WaitlistBadge() {
                 onChange={e => setEmail(e.target.value)}
                 required
               />
-              <button className={s.submit} type="submit">Request Early Access</button>
+              {error && <p className={s.error}>{error}</p>}
+              <button className={s.submit} type="submit" disabled={loading}>
+                {loading ? 'Submitting…' : 'Request Early Access'}
+              </button>
             </form>
           )}
         </div>

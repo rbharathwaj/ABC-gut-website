@@ -3,6 +3,20 @@ import { useNavigate, useSearchParams, Link } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import styles from './SignupPage.module.css'
 
+const API = 'http://170.9.226.113:8000'
+
+async function recordSignup(name, email, plan) {
+  try {
+    await fetch(`${API}/signup`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name, email, plan: plan || '' }),
+    })
+  } catch {
+    // non-blocking — local account still created
+  }
+}
+
 const PLANS = [
   {
     id: 'kit',
@@ -68,8 +82,8 @@ export default function SignupPage() {
         setLoading(false)
         return
       }
+      await recordSignup(name.trim(), email.trim(), plan.name)
       // TODO: redirect to Stripe checkout when payment is integrated
-      // e.g. navigate('/checkout?plan=' + selectedPlan)
       navigate('/dashboard')
     } else {
       const result = register(name.trim(), email.trim(), password, null, code.trim())
@@ -78,6 +92,7 @@ export default function SignupPage() {
         setLoading(false)
         return
       }
+      await recordSignup(name.trim(), email.trim(), result.user?.plan || '')
       navigate('/dashboard')
     }
 

@@ -71,21 +71,21 @@ export default function ChatBot({ triggerMessage }) {
     fetch('http://170.9.226.113:8000/query', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      
-      // 🔥 ONLY CHANGE HERE
       body: JSON.stringify({
         query: text,
         session_id: sessionIdRef.current
       }),
     })
-      .then(r => r.json())
+      .then(r => {
+        if (!r.ok) throw new Error(`Server error: ${r.status}`)
+        return r.json()
+      })
       .then(data => {
         const a = data.answer
-
-        const text =
-          a.direct ||
-          a.raw ||
-          "⚠️ No answer generated"
+        const replyText =
+          a?.direct ||
+          a?.raw ||
+          "Sorry, I couldn't generate an answer. Please try again."
 
         const sources = data.meta?.sources?.length
           ? `\n\nSources: ${data.meta.sources.join(', ')}`
@@ -93,12 +93,15 @@ export default function ChatBot({ triggerMessage }) {
 
         setMessages(prev => [
           ...prev,
-          {
-            role: 'assistant',
-            text: text + sources
-          }
+          { role: 'assistant', text: replyText + sources }
         ])
-
+        setLoading(false)
+      })
+      .catch(() => {
+        setMessages(prev => [
+          ...prev,
+          { role: 'assistant', text: "I'm having trouble connecting right now. Please try again in a moment, or email us at support@abcgut.com." }
+        ])
         setLoading(false)
       })
   }
