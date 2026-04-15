@@ -68,7 +68,7 @@ export default function ChatBot({ triggerMessage }) {
     setInput('')
     setLoading(true)
 
-    fetch('https://takeapeek-abcgutwebsite.hf.space/query', {
+    fetch('http://170.9.226.113:8000/query', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       
@@ -226,7 +226,7 @@ export default function ChatBot({ triggerMessage }) {
 //     setInput('')
 //     setLoading(true)
 
-//     fetch('https://takeapeek-abcgutwebsite.hf.space/query', {
+//     fetch('http://170.9.226.113:8000/query', {
 //       method: 'POST',
 //       headers: { 'Content-Type': 'application/json' },
 //       body: JSON.stringify({ query: text }),

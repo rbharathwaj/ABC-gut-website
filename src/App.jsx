@@ -10,13 +10,10 @@ import DashboardPage from './pages/DashboardPage'
 import ChatPage from './pages/ChatPage'
 import ReportViewerPage from './pages/ReportViewerPage'
 import AdminPage from './pages/AdminPage'
-import WaitlistBadge from './components/WaitlistBadge'
-
 export default function App() {
   return (
     <AuthProvider>
       <Navbar />
-      <WaitlistBadge />
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<LoginPage />} />
