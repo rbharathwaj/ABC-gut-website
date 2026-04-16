@@ -17,18 +17,28 @@ export default function WaitlistBadge() {
     setFirst(''); setLast(''); setEmail(''); setError('')
   }
 
+  const SHEETS_URL = 'https://script.google.com/macros/s/AKfycby4wyEo6yToiXSFieSweI-PE5VwsVoQFxcR1UTiuryoL2QtxluuHh10neuk6SjVkyjD5A/exec'
+
   async function handleSubmit(e) {
     e.preventDefault()
     if (!email) return
     setLoading(true)
     setError('')
     try {
-      const res = await fetch(`${API}/waitlist`, {
+      // Save to Oracle server DB
+      fetch(`${API}/waitlist`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ first_name: firstName, last_name: lastName, email }),
+      }).catch(() => {})
+
+      // Save to Google Sheet
+      await fetch(SHEETS_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ first_name: firstName, last_name: lastName, email }),
       })
-      if (!res.ok) throw new Error()
       setSubmit(true)
     } catch {
       setError('Something went wrong. Please try again.')
