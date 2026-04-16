@@ -33,12 +33,8 @@ export default function WaitlistBadge() {
       }).catch(() => {})
 
       // Save to Google Sheet
-      await fetch(SHEETS_URL, {
-        method: 'POST',
-        mode: 'no-cors',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ first_name: firstName, last_name: lastName, email }),
-      })
+      const params = new URLSearchParams({ first_name: firstName, last_name: lastName, email })
+      await fetch(`${SHEETS_URL}?${params}`, { mode: 'no-cors' })
       setSubmit(true)
     } catch {
       setError('Something went wrong. Please try again.')
