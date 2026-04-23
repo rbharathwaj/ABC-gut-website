@@ -12,10 +12,10 @@ const SEED = {
   users: [
     {
       id: 'usr_001',
-      email: 'rbharathwaj2003@gmail.com',
+      email: 'admin@abcgut.com',
       // NOTE: never store plain-text passwords in production —
       //       hashing must happen server-side
-      password: 'abcguttest',
+      password: 'admin@abcgut',
       name: 'Bharathwaj R',
       role: 'admin',
       plan: 'Before & After',
