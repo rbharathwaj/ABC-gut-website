@@ -30,7 +30,7 @@ const SEED = {
       role: 'user',
       plan: 'Test Kit',
       joinDate: '2026-04-22',
-      reportIds: [],
+      reportIds: ['rpt_002'],
     },
   ],
   // Redemption codes for physical kits sold at Walgreens/CVS
@@ -52,6 +52,18 @@ const SEED = {
       reportDate: '2026-04-01',
       sampleId: 'ABG-2026-0001',
       clientId: 'CLT-2026-001',
+      file: '/reports/ABC_Gut_Report.html',
+      score: 78,
+      status: 'complete',
+    },
+    {
+      id: 'rpt_002',
+      userId: 'usr_002',
+      title: 'Comprehensive Microbiome & Systems Health Report',
+      collectionDate: '2026-03-25',
+      reportDate: '2026-04-01',
+      sampleId: 'ABG-2026-0002',
+      clientId: 'CLT-2026-002',
       file: '/reports/ABC_Gut_Report.html',
       score: 78,
       status: 'complete',
@@ -85,9 +97,13 @@ function getDb() {
       dirty = true
     }
 
-    // Ensure test user exists
+    // Ensure test user and their report exist
     if (!db.users.find(u => u.id === 'usr_002')) {
       db.users.push(structuredClone(SEED.users[1]))
+      dirty = true
+    }
+    if (!db.reports.find(r => r.id === 'rpt_002')) {
+      db.reports.push(structuredClone(SEED.reports[1]))
       dirty = true
     }
 
