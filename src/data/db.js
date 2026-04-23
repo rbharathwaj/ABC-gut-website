@@ -22,6 +22,16 @@ const SEED = {
       joinDate: '2026-04-01',
       reportIds: ['rpt_001'],
     },
+    {
+      id: 'usr_002',
+      email: 'test@abcgut.com',
+      password: 'test@abcgut',
+      name: 'Test User',
+      role: 'user',
+      plan: 'Test Kit',
+      joinDate: '2026-04-22',
+      reportIds: [],
+    },
   ],
   // Redemption codes for physical kits sold at Walgreens/CVS
   // TODO: generate and validate these server-side in production
@@ -72,6 +82,12 @@ function getDb() {
     const adminUser = db.users.find(u => u.id === 'usr_001')
     if (adminUser && !adminUser.role) {
       adminUser.role = 'admin'
+      dirty = true
+    }
+
+    // Ensure test user exists
+    if (!db.users.find(u => u.id === 'usr_002')) {
+      db.users.push(structuredClone(SEED.users[1]))
       dirty = true
     }
 
