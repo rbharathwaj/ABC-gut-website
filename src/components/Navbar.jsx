@@ -7,7 +7,6 @@ const NAV_LINKS = [
   { label: 'How It Works', href: '/#how-it-works' },
   { label: 'What You Get', href: '/#features' },
   { label: 'Gutly AI', href: '/#gutly' },
-  { label: 'Pricing', href: '/#pricing' },
   { label: 'Science', href: '/#science' },
 ]
 
@@ -52,7 +51,7 @@ export default function Navbar() {
           ) : (
             <>
               <Link to="/login" className={styles.btnGhost}>Sign In</Link>
-              <a href="/#pricing" className={styles.btnOutline}>Get Your Kit</a>
+              <button className={styles.btnOutline} onClick={() => window.dispatchEvent(new Event('open-waitlist'))}>Join Beta</button>
             </>
           )}
           <button

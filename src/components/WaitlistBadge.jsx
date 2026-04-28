@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import s from './WaitlistBadge.module.css'
 
 const API = 'https://api.abcgut.com'
@@ -11,6 +11,12 @@ export default function WaitlistBadge() {
   const [submitted, setSubmit]  = useState(false)
   const [loading, setLoading]   = useState(false)
   const [error, setError]       = useState('')
+
+  useEffect(() => {
+    const handler = () => setOpen(true)
+    window.addEventListener('open-waitlist', handler)
+    return () => window.removeEventListener('open-waitlist', handler)
+  }, [])
 
   function handleClose() {
     setOpen(false); setSubmit(false)
